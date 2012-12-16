@@ -1,10 +1,14 @@
 from django.conf.urls import patterns, include, url
+# import UserManagement.views
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^user/', include('UserManagement.urls')),
+    url(r'^$', 'IntelliGame.views.home'),
+    # url(r'^user/register$', UserManagement.views.register)
     # Examples:
     # url(r'^$', 'IntelliGame.views.home', name='home'),
     # url(r'^IntelliGame/', include('IntelliGame.foo.urls')),

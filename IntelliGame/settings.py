@@ -28,7 +28,7 @@ TIME_ZONE = 'Europe/Warsaw'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'pl'
+LANGUAGE_CODE = 'en/GB'
 
 SITE_ID = 1
 
@@ -64,6 +64,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    "/home/marcin/workspace/IntelliGame/templates/",
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -103,6 +104,7 @@ ROOT_URLCONF = 'IntelliGame.urls'
 WSGI_APPLICATION = 'IntelliGame.wsgi.application'
 
 TEMPLATE_DIRS = (
+    "/home/marcin/workspace/IntelliGame/templates/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
