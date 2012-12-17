@@ -9,16 +9,19 @@
 <body onload="init()">
     <div class="page">
         <div id="frontHeader" class="frontHeader"></div>
-        <div class="middleContent">
+        <div class="middleContent" id="middleContent">
             <div id="leftBar" class="leftBar">
+                left bar
             </div>
             <div id="content" class="content">
                 {% block content %}
                 {% endblock %}
             </div>
         </div>
-        <div class="frontFooter" id="frontFooter">
-            foot
+        <div class="footerHandler">
+            <div class="frontFooter" id="frontFooter">
+                foot
+            </div>
         </div>
     </div>
 </body>

@@ -10,17 +10,19 @@ function init() {
 
 
 function resizeDivs() {
+    parentDiv = document.getElementById('middleContent');
 	leftDiv = document.getElementById('leftBar');
 	rightDiv = document.getElementById('content');
 	desiredHeight = 0;
 	desiredHeight = getDocHeight()
 			- document.getElementById('frontHeader').offsetHeight
 			- document.getElementById('frontFooter').offsetHeight
-            - 20; // body's margin
+            - 22 ; // body's margin + borders
 	desiredHeight = Math.max(desiredHeight, minLeftHeight);
 	desiredHeight = Math.max(desiredHeight, minRightHeight);
 	leftDiv.style.height = desiredHeight + 'px';
 	rightDiv.style.height = desiredHeight + 'px';
+    parentDiv.style.height = desiredHeight + 20 + 'px'; // + 20 = column's margins
 }
 
 
