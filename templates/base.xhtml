@@ -8,13 +8,17 @@
 </head>
 <body onload="init()">
 	<div id="frontHeader" class="frontHeader">Header</div>
-	<div id="leftBar" class="leftBar">
-		left bar
-	</div>
-	<div id="content" class="content">
-		{% block content %}
-		{% endblock %}
-	</div>
-	<div id="frontFooter" class="frontFooter">abc</div>
+	<div class="middleContent">
+        <div id="leftBar" class="leftBar">
+            left bar <br />
+        </div>
+        <div id="content" class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="frontFooter" id="frontFooter">
+        footer
+    </div>
 </body>
 </html>
