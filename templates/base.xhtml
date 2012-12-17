@@ -7,18 +7,19 @@
 <script type="text/JavaScript" src="{{ STATIC_URL }}js/DivAdaptation.js"></script>
 </head>
 <body onload="init()">
-	<div id="frontHeader" class="frontHeader">Header</div>
-	<div class="middleContent">
-        <div id="leftBar" class="leftBar">
-            left bar <br />
+    <div class="page">
+        <div id="frontHeader" class="frontHeader"></div>
+        <div class="middleContent">
+            <div id="leftBar" class="leftBar">
+            </div>
+            <div id="content" class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
-        <div id="content" class="content">
-            {% block content %}
-            {% endblock %}
+        <div class="frontFooter" id="frontFooter">
+            foot
         </div>
-    </div>
-    <div class="frontFooter" id="frontFooter">
-        footer
     </div>
 </body>
 </html>

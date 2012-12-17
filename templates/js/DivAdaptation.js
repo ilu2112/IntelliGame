@@ -15,7 +15,8 @@ function resizeDivs() {
 	desiredHeight = 0;
 	desiredHeight = getDocHeight()
 			- document.getElementById('frontHeader').offsetHeight
-			- document.getElementById('frontFooter').offsetHeight;
+			- document.getElementById('frontFooter').offsetHeight
+            - 20; // body's margin
 	desiredHeight = Math.max(desiredHeight, minLeftHeight);
 	desiredHeight = Math.max(desiredHeight, minRightHeight);
 	leftDiv.style.height = desiredHeight + 'px';
@@ -23,7 +24,7 @@ function resizeDivs() {
 }
 
 
-// TODO: Test in IE
+// TODO: Test on IE
 // In case of problems:
 // http://james.padolsey.com/javascript/get-document-height-cross-browser/
 function getDocHeight() {
