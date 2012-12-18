@@ -1,27 +1,42 @@
+{% comment %}
+Primary template for every page. Expandable blocks:
+* additional_headers
+* content
+Possible variables:
+* title
+{% endcomment %}
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<link href="{{ STATIC_URL }}style/base.css" rel="stylesheet" type="text/css" />
-<script type="text/JavaScript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
-<script type="text/JavaScript" src="{{ STATIC_URL }}js/DivAdaptation.js"></script>
-</head>
-<body onload="init()">
-    <div class="page">
-        <div id="frontHeader" class="frontHeader"></div>
-        <div class="middleContent" id="middleContent">
-            <div id="leftBar" class="leftBar">
-            </div>
-            <div id="content" class="content">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </div>
-        <div class="footerHandler">
-            <div class="frontFooter" id="frontFooter">
-                foot
-            </div>
-        </div>
-    </div>
-</body>
+
+	<head>
+		<title>IntelliGame {% if title %}:: {{ title }}{% endif %}</title>
+		<link href="{{ STATIC_URL }}style/base.css" rel="stylesheet" type="text/css" />
+		<script type="text/JavaScript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
+		<script type="text/JavaScript" src="{{ STATIC_URL }}js/DivAdaptation.js"></script>
+		{% block additional_headers %} {% endblock %}
+	</head>
+
+	<body onload="init()">
+		<div class="page">
+			<div id="frontHeader" class="frontHeader">
+				header
+			</div>
+			<div class="middleContent" id="middleContent">
+				<div id="leftBar" class="leftBar">
+					menus
+				</div>
+				<div id="content" class="content">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
+			<div class="footerHandler" id="footerHandler">
+				<div class="frontFooter" id="frontFooter">
+					foot
+				</div>
+			</div>
+		</div>
+	</body>
+
 </html>

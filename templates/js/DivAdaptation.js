@@ -16,8 +16,8 @@ function resizeDivs() {
 	desiredHeight = 0;
 	desiredHeight = getDocHeight()
 			- document.getElementById('frontHeader').offsetHeight
-			- document.getElementById('frontFooter').offsetHeight
-            - 44 ; // body's margin + borders + something else
+			- document.getElementById('footerHandler').offsetHeight
+            - 45 ; // margins + borders
 	desiredHeight = Math.max(desiredHeight, minLeftHeight);
 	desiredHeight = Math.max(desiredHeight, minRightHeight);
 	leftDiv.style.height = desiredHeight + 'px';

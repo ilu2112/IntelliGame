@@ -12,7 +12,7 @@ def register(request):
             form.create_user()
             return HttpResponseRedirect('successful/')
     return render_to_response('UserManagement/register.xhtml',
-                              { "form": form },
+                              { "form": form, "title" : "Register" },
                               context_instance = RequestContext(request));
 
 
