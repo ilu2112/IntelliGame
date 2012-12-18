@@ -1,10 +1,9 @@
 <div style="width: 200px; margin: auto;">
-<ul>
+		<div class="menuTitle">Menu</div>
 	{% if not user.is_authenticated %}
-		<li><a href="/user/register/">register</a></li>
-		<li><a href="/user/login/">login</a></li>
+		<div class="button" onclick="location.href='/user/register/'">Register</div>
+		<div class="button" onclick="location.href='/user/login/'">Log in</div>
 	{% else %}
-		<li><a href="/user/logout/">logout</a></li>
+		<div class="button" onclick="location.href='/user/logout/'">Log out</div>
 	{% endif %}
-</ul>
 </div>

@@ -22,7 +22,8 @@ def register(request):
 
 
 def successful(request):
-    return render_to_response('UserManagement/successful.xhtml',
+    return render_to_response('base.xhtml',
+                              {"title" : "Success"},
                               context_instance = RequestContext(request));
 
 

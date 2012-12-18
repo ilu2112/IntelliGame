@@ -1,0 +1,32 @@
+.button {
+	font-size: 18px;
+	text-decoration: none;
+	vertical-align: middle;
+	text-align: center;
+	color: #333333;
+	font-family: ‘Courier New’, Courier, monospace;
+	border-bottom: 1px dashed #dddddd;
+	width: 230px;
+	margin-left: -15px;
+}
+
+.button:hover {
+	color: #993366;
+	/* background: #d8cfff; */
+	cursor: pointer;
+	border-right: 5px solid  #993366;
+}
+
+.menuTitle {
+	color: #993366;
+	letter-spacing: 1px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	vertical-align: middle;
+	text-align: left;
+	border-bottom: 1px dashed #dddddd;
+	width: 230px;
+	margin-left: -15px;
+	padding-bottom: 10px;
+}
