@@ -1,0 +1,22 @@
+{% extends "base.xhtml" %}
+
+{% block content %}
+
+{% if error_msg %}
+{{ error_msg }}
+{% endif %}
+
+
+<form method="post" action="./">
+	{% csrf_token %}
+	<div class="fieldWrapper">
+		<label for="id_username">Username</label>:
+		<input id="id_username" type="text" name="username" maxlength="30" />
+	</div>
+	<div class="fieldWrapper">
+		<label for="id_passwd">Password</label>:
+		<input type="password" name="passwd" id="id_passwd" />
+	</div>
+	<input type="submit" value="Log in"/>
+</form>
+{% endblock %}
