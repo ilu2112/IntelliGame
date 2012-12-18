@@ -1,19 +1,28 @@
 {% extends "base.xhtml" %}
 
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}UserManagement/style/forms.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block content %}
-Register...
-<br />
-<br />
 <form method="post" action="./">
-{% csrf_token %}
-{% for field in form %}
-        <div class="fieldWrapper">
-            {{ field.errors }}
-            {{ field.label_tag }}: {{ field }}
-        </div>
-    {% endfor %}
-<input type="submit" value="Register"/>
+	{% csrf_token %}
+	<fieldset>
+		<ol>
+			{% for field in form %}
+			<li>
+				{{ field.errors }}
+				{{ field.label_tag }}
+				{% if field.field.required %}
+					<req>*</req>
+				{% else %}
+					<req>&nbsp;</req>
+				{% endif %} : {{ field }}
+			</li>
+			{% endfor %}
+			<input class="submit" type="submit" value="Register"/>
+		</ol>
+	</fieldset>
 </form>
-<br />
 
 {% endblock %}

@@ -1,22 +1,36 @@
 {% extends "base.xhtml" %}
 
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}UserManagement/style/forms.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block content %}
-
-{% if error_msg %}
-{{ error_msg }}
-{% endif %}
-
 
 <form method="post" action="./">
 	{% csrf_token %}
-	<div class="fieldWrapper">
-		<label for="id_username">Username</label>:
-		<input id="id_username" type="text" name="username" maxlength="30" />
-	</div>
-	<div class="fieldWrapper">
-		<label for="id_passwd">Password</label>:
-		<input type="password" name="passwd" id="id_passwd" />
-	</div>
-	<input type="submit" value="Log in"/>
+
+	<fieldset>
+		<ol>
+			{% if error_msg %}
+			<li>
+				<ul class="errorlist">
+					<li>
+						{{ error_msg }}
+					</li>
+				</ul>
+			</li>
+			{% endif %}
+			<li>
+				<label for="id_username">Username</label> :
+				<input id="id_username" type="text" name="username" maxlength="30" />
+			</li>
+			<li>
+				<label for="id_passwd">Password</label> :
+				<input type="password" name="passwd" id="id_passwd" />
+			</li>
+			<input class="submit" type="submit" value="Log in"/>
+		</ol>
+	</fieldset>
+
 </form>
 {% endblock %}

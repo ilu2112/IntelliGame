@@ -1,0 +1,49 @@
+fieldset {
+	text-align: center;
+	border-style: none;
+}
+
+label {
+	display: inline-block;
+	line-height: 25px;
+	vertical-align: top;
+	text-align: right;
+	width: 180px;
+	color: #333333;
+	font-family: ‘Lucida Console’, Monaco, monospace;
+	font-size: 15px;
+}
+
+fieldset ol {
+	margin: 0;
+	padding: 0;
+}
+
+fieldset li {
+	list-style: none;
+	padding: 5px;
+	margin: 0;
+}
+
+req {
+	font-size: 15px;
+	font-family: ‘Lucida Console’, Monaco, monospace;
+	color: #f00;
+}
+
+li input {
+	font-family: ‘Lucida Console’, Monaco, monospace;
+	width: 300px;
+}
+
+input.submit {
+	width: 150px;
+	height: 40px;
+	margin-top: 30px;
+}
+
+ul.errorlist {
+	color: #ff0000;
+	font-family: ‘Lucida Console’, Monaco, monospace;
+	font-size: 12px;
+}

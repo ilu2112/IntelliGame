@@ -27,8 +27,13 @@ Possible variables:
 					{% include "basemenu.xhtml" %}
 				</div>
 				<div id="content" class="content">
-					{% block content %}
-					{% endblock %}
+					<div class="subTitle">
+						{{ title }}
+					</div>
+					<div class="subContent" id="subContent">
+						{% block content %}
+						{% endblock %}
+					</div>
 				</div>
 			</div>
 			<div class="footerHandler" id="footerHandler">
