@@ -8,11 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
 from UserManagement.models import UserForm
+from UserManagement.models import ChangePasswdForm
+from UserManagement.models import append_error
 
 
 
-
-def register(request):
+def register_v(request):
     form = UserForm()
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -25,7 +26,7 @@ def register(request):
 
 
 
-def successful(request):
+def successful_v(request):
     return render_to_response('base.xhtml',
                               {"title" : "Success"},
                               context_instance = RequestContext(request));
@@ -63,7 +64,22 @@ def logout_v(request):
 
 
 @login_required
-def show_profile(request):
+def show_profile_v(request):
     return render_to_response('UserManagement/profile.xhtml',
                               { "title" : "Profile details" },
+                              context_instance = RequestContext(request));
+
+
+
+@login_required
+def change_passwd_v(request):
+    form = ChangePasswdForm()
+    if request.method == 'POST':
+        form = ChangePasswdForm(request.POST)
+        if form.is_valid() and form.check_passwd(request.user):
+            request.user.set_password(form.data["new_passwd"])
+            request.user.save()
+            return HttpResponseRedirect('../successful/')
+    return render_to_response('UserManagement/change_passwd.xhtml',
+                              { "form": form, "title" : "Change password" },
                               context_instance = RequestContext(request));

@@ -16,30 +16,25 @@ class UserForm(forms.Form):
     last_name = forms.CharField(max_length = 30, required = False)
     email = forms.EmailField(required = False, label = "e-mail")
     passwd = forms.CharField(widget = forms.PasswordInput(render_value = True), label = "Password")
-    r_passwd = forms.CharField(widget = forms.PasswordInput, label="Repeat password")
+    r_passwd = forms.CharField(widget = forms.PasswordInput, label = "Repeat password")
 
 
     def is_valid(self):
         succ = forms.Form.is_valid(self)
         # Are passwords equal?
         if self.data["passwd"] != self.data["r_passwd"]:
-            self.append_error("passwd", "Passwords don't match")
+            append_error(self, "passwd", "Passwords don't match.")
             succ = False
         # Is username valid?
         if not re.match("^[a-zA-Z0-9_@+.-]{1,30}$", self.data["username"]):
-            self.append_error("username", "Invalid format (only letters, digits and signs: @ - . _ +)")
+            append_error(self, "username", "Invalid format (only letters, digits and signs: @ - . _ +).")
             succ = False
         else:
             # Is username unique?
             if User.objects.filter(username = self.data["username"]).exists():
-                self.append_error("username", "Username '%s' is already in use" % self.data["username"])
+                append_error(self, "username", "Username '%s' is already in use." % self.data["username"])
                 succ = False
         return succ
-
-
-    def append_error(self, key, error):
-        self.errors[key] = self.errors.get(key, ErrorList())
-        self.errors[key].append(error)
 
 
     def create_user(self):
@@ -47,3 +42,35 @@ class UserForm(forms.Form):
         user.first_name = self.data["first_name"]
         user.last_name = self.data["last_name"]
         user.save()
+
+
+
+
+def append_error(form, key, error):
+    form.errors[key] = form.errors.get(key, ErrorList())
+    form.errors[key].append(error)
+
+
+
+
+class ChangePasswdForm(forms.Form):
+    old_passwd = forms.CharField(widget = forms.PasswordInput(), label = "Old password")
+    new_passwd = forms.CharField(widget = forms.PasswordInput(), label = "New password")
+    r_passwd = forms.CharField(widget = forms.PasswordInput(), label = "Repeat new password")
+
+
+    def is_valid(self):
+        succ = forms.Form.is_valid(self)
+        # Are passwords equal?
+        if self.data["new_passwd"] != self.data["r_passwd"]:
+            append_error(self, "new_passwd", "Passwords don't match.")
+            succ = False
+        return succ
+
+    
+    def check_passwd(self, user):
+        if user.check_password(self.data["old_passwd"]):
+            return True
+        else:
+            append_error(self, "old_passwd", "Wrong password.")
+            return False
