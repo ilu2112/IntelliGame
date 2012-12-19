@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^successful[/]$', UserManagement.views.successful),
     url(r'^login[/]$', UserManagement.views.login_v),
     url(r'^logout[/]$', UserManagement.views.logout_v),
+    url(r'^show_profile[/]$', UserManagement.views.show_profile),
 )

@@ -28,8 +28,8 @@ div.frontHeader {
 	background: -ms-linear-gradient(top,  rgba(146,137,139,1) 1%,rgba(83,74,76,1) 60%,rgba(46,46,46,1) 100%);
 	background: linear-gradient(to bottom,  rgba(146,137,139,1) 1%,rgba(83,74,76,1) 60%,rgba(46,46,46,1) 100%);
 	/*
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#92898b', endColorstr='#2e2e2e',GradientType=0 );
-	*/
+	 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#92898b', endColorstr='#2e2e2e',GradientType=0 );
+	 */
 }
 
 div.middleContent {
@@ -85,12 +85,11 @@ div.frontFooter a {
 div.subTitle {
 	color: #993366;
 	letter-spacing: 1px;
-	font-family: Verdana, Geneva, sans-serif;
-	font-weight: bold;
-	font-size: 30px;
+	font-family: 'Titillium Web', sans-serif;
+	font-weight: 700;
+	font-size: 32px;
 	text-align: left;
 	padding-left: 30px;
-	padding-top: 10px;
 	margin-bottom: 30px;
 	width: auto;
 	float: left;

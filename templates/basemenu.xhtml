@@ -4,6 +4,9 @@
 		<div class="button" onclick="location.href='/user/register/'">Register</div>
 		<div class="button" onclick="location.href='/user/login/'">Log in</div>
 	{% else %}
+		<div class="button" onclick="location.href='/user/show_profile/'">Show profile</div>
+		<div class="button" onclick="location.href='/user/edit_profile/'">Edit profile</div>
+		<div class="button" onclick="location.href='/user/change_passwd/'">Change password</div>
 		<div class="button" onclick="location.href='/user/logout/'">Log out</div>
 	{% endif %}
 </div>

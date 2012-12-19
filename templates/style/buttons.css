@@ -4,7 +4,7 @@
 	vertical-align: middle;
 	text-align: center;
 	color: #333333;
-	font-family: ‘Courier New’, Courier, monospace;
+	font-family: 'Ubuntu Mono', sans-serif;
 	border-bottom: 1px dashed #dddddd;
 	width: 230px;
 	margin-left: -15px;
@@ -12,17 +12,16 @@
 
 .button:hover {
 	color: #993366;
-	/* background: #d8cfff; */
 	cursor: pointer;
-	border-right: 5px solid  #993366;
+	border-right: 5px solid #993366;
 }
 
 .menuTitle {
 	color: #993366;
 	letter-spacing: 1px;
-	font-family: Verdana, Geneva, sans-serif;
-	font-weight: bold;
-	font-size: 20px;
+	font-family: 'Titillium Web', sans-serif;
+	font-weight: 700;
+	font-size: 24px;
 	vertical-align: middle;
 	text-align: left;
 	border-bottom: 1px dashed #dddddd;

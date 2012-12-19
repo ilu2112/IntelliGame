@@ -10,8 +10,8 @@ label {
 	text-align: right;
 	width: 180px;
 	color: #333333;
-	font-family: ‘Lucida Console’, Monaco, monospace;
-	font-size: 15px;
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-size: 18px;
 }
 
 fieldset ol {
@@ -26,13 +26,13 @@ fieldset li {
 }
 
 req {
-	font-size: 15px;
-	font-family: ‘Lucida Console’, Monaco, monospace;
+	font-size: 20px;
+	font-family: 'Ubuntu Mono', sans-serif;
 	color: #f00;
 }
 
 li input {
-	font-family: ‘Lucida Console’, Monaco, monospace;
+	font-family: 'Ubuntu Mono', sans-serif;
 	width: 300px;
 }
 
@@ -40,10 +40,12 @@ input.submit {
 	width: 150px;
 	height: 40px;
 	margin-top: 30px;
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-size: 16px;
 }
 
 ul.errorlist {
 	color: #ff0000;
-	font-family: ‘Lucida Console’, Monaco, monospace;
-	font-size: 12px;
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-size: 15px;
 }
