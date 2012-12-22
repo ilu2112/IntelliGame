@@ -9,6 +9,15 @@ from django.contrib.auth.models import User
 import re
 
 
+
+
+def append_error(form, key, error):
+    form.errors[key] = form.errors.get(key, ErrorList())
+    form.errors[key].append(error)
+    
+    
+    
+    
 class UserForm(forms.Form):
 
     username = forms.CharField(max_length = 30, required = True)
@@ -46,13 +55,6 @@ class UserForm(forms.Form):
 
 
 
-def append_error(form, key, error):
-    form.errors[key] = form.errors.get(key, ErrorList())
-    form.errors[key].append(error)
-
-
-
-
 class ChangePasswdForm(forms.Form):
     old_passwd = forms.CharField(widget = forms.PasswordInput(), label = "Old password")
     new_passwd = forms.CharField(widget = forms.PasswordInput(), label = "New password")
@@ -74,3 +76,23 @@ class ChangePasswdForm(forms.Form):
         else:
             append_error(self, "old_passwd", "Wrong password.")
             return False
+        
+        
+    def save(self, user):
+        user.set_password(self.data["new_passwd"])
+        user.save()    
+        
+        
+        
+        
+class EditProfileForm(forms.Form):
+    first_name = forms.CharField(max_length = 30, required = False)
+    last_name = forms.CharField(max_length = 30, required = False)
+    email = forms.EmailField(required = False, label = "e-mail")
+    
+    
+    def save(self, user):
+        user.first_name = self.data["first_name"]
+        user.last_name = self.data["last_name"]
+        user.email = self.data["email"]
+        user.save()

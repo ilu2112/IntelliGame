@@ -7,6 +7,7 @@ label, req, li input, input.submit, ul.errorlist {
 	font-family: 'Ubuntu Mono', sans-serif;
 	font-weight: 400;
 	font-size: 16px;
+	color: #333333;
 }
 
 label {
