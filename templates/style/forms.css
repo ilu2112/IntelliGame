@@ -3,14 +3,17 @@ fieldset {
 	border-style: none;
 }
 
+label, req, li input, input.submit, ul.errorlist {
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+}
+
 label {
 	display: inline-block;
-	line-height: 25px;
-	vertical-align: top;
-	text-align: right;
 	width: 180px;
-	color: #333333;
-	font-family: 'Ubuntu Mono', sans-serif;
+	line-height: 25px;
+	text-align: right;
 	font-size: 18px;
 }
 
@@ -27,13 +30,10 @@ fieldset li {
 
 req {
 	font-size: 20px;
-	font-family: 'Ubuntu Mono', sans-serif;
-	color: #f00;
+	color: #ff0000;
 }
 
 li input {
-	font-family: 'Ubuntu Mono', sans-serif;
-	font-size: 16px;
 	width: 300px;
 }
 
@@ -41,12 +41,9 @@ input.submit {
 	width: 150px;
 	height: 40px;
 	margin-top: 30px;
-	font-family: 'Ubuntu Mono', sans-serif;
-	font-size: 16px;
 }
 
 ul.errorlist {
 	color: #ff0000;
-	font-family: 'Ubuntu Mono', sans-serif;
 	font-size: 15px;
 }

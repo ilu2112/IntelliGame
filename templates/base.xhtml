@@ -1,3 +1,6 @@
+<!--
+<object data="circle1.svg" type="image/svg+xml"></object>
+-->
 {% comment %}
 Primary template for every page. Expandable blocks:
 * additional_headers
@@ -22,21 +25,24 @@ Possible variables:
 	<body onload="init()">
 		<div class="page">
 			<div id="frontHeader" class="frontHeader">
+				<object class="logo" data="{{ STATIC_URL }}img/logo.png" type="image/svg+xml">
+					&nbsp;
+				</object>
 				{% if user.is_authenticated %}
 				<div class="loggedAs">
 					Logged as <a href="/user/show_profile/">{{user.username}}</a>
 				</div>
 				{% endif %}
 			</div>
-			<div class="middleContent" id="middleContent">
-				<div id="leftBar" class="leftBar">
+			<div class="frontContent" id="frontContent">
+				<div id="leftColumn" class="leftColumn">
 					{% include "basemenu.xhtml" %}
 				</div>
-				<div id="content" class="content">
+				<div id="rightColumn" class="rightColumn">
 					<div class="subTitle">
 						{{ title }}
 					</div>
-					<div class="subContent" id="subContent">
+					<div class="content" id="content">
 						{% block content %}
 						{% endblock %}
 					</div>

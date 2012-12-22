@@ -1,23 +1,28 @@
 var minLeftHeight;
 var minRightHeight;
 
+var parentDiv;
+var leftDiv;
+var rightDiv;
+
 
 function init() {
-	minLeftHeight = document.getElementById('leftBar').offsetHeight;
-	minRightHeight = document.getElementById('content').offsetHeight;
+	parentDiv = document.getElementById('frontContent');
+	leftDiv = document.getElementById('leftColumn');
+	rightDiv = document.getElementById('rightColumn');
+	minLeftHeight = document.getElementById('leftColumn').offsetHeight;
+	minRightHeight = document.getElementById('rightColumn').offsetHeight;
 	resizeDivs();
 }
 
 
 function resizeDivs() {
-    parentDiv = document.getElementById('middleContent');
-	leftDiv = document.getElementById('leftBar');
-	rightDiv = document.getElementById('content');
-	desiredHeight = 0;
 	desiredHeight = getDocHeight()
 			- document.getElementById('frontHeader').offsetHeight
 			- document.getElementById('footerHandler').offsetHeight
-            - 45 ; // margins + borders
+            - 20 	// page's margins
+            - 2	 	// page's borders
+			- 20;	// columns' margins
 	desiredHeight = Math.max(desiredHeight, minLeftHeight);
 	desiredHeight = Math.max(desiredHeight, minRightHeight);
 	leftDiv.style.height = desiredHeight + 'px';
