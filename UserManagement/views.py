@@ -67,7 +67,7 @@ def logout_v(request):
 
 @login_required
 def show_profile_v(request):
-    return render_to_response('UserManagement/profile.xhtml',
+    return render_to_response('UserManagement/show_profile.xhtml',
                               { "title" : "Profile details" },
                               context_instance = RequestContext(request));
 
@@ -87,6 +87,7 @@ def change_passwd_v(request):
 
 
 
+@login_required
 def edit_profile_v(request):
     form = EditProfileForm(initial = {'first_name' : request.user.first_name,
                                      'last_name' : request.user.last_name,

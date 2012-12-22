@@ -1,0 +1,28 @@
+li {
+	list-style: none;
+}
+
+div.name, div.value {
+	display: inline-block;
+	line-height: 30px;
+	text-align: center;
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-weight: 400;
+	font-size: 17px;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 1px;
+	margin-bottom: -1px;
+}
+
+div.name {
+	background: #993366;
+	width: 200px;
+	color: #ffffff;
+}
+
+div.value {
+	background: #dddddd;
+	width: 500px;
+	color: #333333;
+}
