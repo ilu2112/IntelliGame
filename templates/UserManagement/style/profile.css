@@ -5,6 +5,7 @@ li {
 div.name, div.value {
 	display: inline-block;
 	line-height: 30px;
+	height: 30px;
 	text-align: center;
 	font-family: 'Ubuntu Mono', sans-serif;
 	font-weight: 400;

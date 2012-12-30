@@ -25,9 +25,11 @@ Possible variables:
 	<body onload="init()">
 		<div class="page">
 			<div id="frontHeader" class="frontHeader">
+				<!--
 				<object class="logo" data="{{ STATIC_URL }}img/logo.png" type="image/svg+xml">
 					&nbsp;
 				</object>
+				-->
 				{% if user.is_authenticated %}
 				<div class="loggedAs">
 					Logged as <a href="/user/show_profile/">{{user.username}}</a>
