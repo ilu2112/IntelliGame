@@ -6,7 +6,8 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    url(r'^user/', include('UserManagement.urls')),
+    url(r'^user/', include('user_management.urls')),
+    url(r'^challenge/', include('challenge_management.urls')),
     url(r'^$', 'IntelliGame.views.home'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

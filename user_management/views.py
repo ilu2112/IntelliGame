@@ -7,10 +7,10 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
-from UserManagement.models import UserForm
-from UserManagement.models import ChangePasswdForm
-from UserManagement.models import EditProfileForm
-from UserManagement.models import append_error
+from user_management.models import UserForm
+from user_management.models import ChangePasswdForm
+from user_management.models import EditProfileForm
+from user_management.models import append_error
 
 
 

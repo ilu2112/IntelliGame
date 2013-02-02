@@ -3,7 +3,7 @@ fieldset {
 	border-style: none;
 }
 
-label, req, li input, input.submit, ul.errorlist {
+label, req, li input, li select, input.submit, ul.errorlist {
 	font-family: 'Ubuntu Mono', sans-serif;
 	font-weight: 400;
 	font-size: 16px;
@@ -34,7 +34,7 @@ req {
 	color: #ff0000;
 }
 
-li input {
+li input, li select {
 	width: 300px;
 }
 
