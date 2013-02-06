@@ -1,0 +1,56 @@
+div.table {
+	display: table;
+	width: 95%;
+	margin: auto;
+	border-spacing: 1px;
+	
+}
+
+/* row */
+div.table > div {
+	display: table-row;
+}
+
+/* cell */
+div.table > div > div {
+	display: table-cell;
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-weight: 400;
+	font-size: 17px;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 1px;
+	border-color: #000000;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/* header */
+div.table > div.header > div {
+	background-color: #993366;
+	color: #ffffff;
+	height: 35px;
+	line-height: 35px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+div.short {
+	width: 20%;
+}
+
+.IN_QUEUE {
+	background-color: #7c7c7c;
+}
+
+.SUCCESS {
+	background-color: #99cc66;
+}
+
+.ERROR {
+	background-color: #ff6666;	
+}
+
+.IN_PROGRESS {
+	background-color: #ffcc33;
+}

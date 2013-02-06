@@ -10,6 +10,7 @@ from django.template import RequestContext
 from user_management.models import UserForm
 from user_management.models import ChangePasswdForm
 from user_management.models import EditProfileForm
+from user_management.models import RecentAction
 from user_management.models import append_error
 
 
@@ -92,4 +93,14 @@ def edit_profile_v(request):
             return HttpResponseRedirect('/successful/')
     return render_to_response('UserManagement/edit_profile.xhtml',
                               { "form": form, "title" : "Edit profile" },
+                              context_instance = RequestContext(request));
+                              
+                              
+                              
+@login_required
+def recent_actions_v(request):
+    # recent_actions = RecentAction.objects.getAll( owner = request.user )
+    recent_actions = RecentAction.objects.filter( owner = request.user )
+    return render_to_response('UserManagement/recent_actions.xhtml',
+                              { "recent_actions": recent_actions, "title" : "Recent actions" },
                               context_instance = RequestContext(request));

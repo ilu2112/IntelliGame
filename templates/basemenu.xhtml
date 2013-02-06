@@ -7,10 +7,14 @@
 		<div class="button" onclick="location.href='/user/show_profile/'">Show profile</div>
 		<div class="button" onclick="location.href='/user/edit_profile/'">Edit profile</div>
 		<div class="button" onclick="location.href='/user/change_passwd/'">Change password</div>
+		<div class="button" onclick="location.href='/user/show_profile/'">Show profile</div>
 		<div class="button" onclick="location.href='/user/logout/'">Log out</div>
 	{% endif %}
 	{% if user.is_authenticated %}
 		<div class="menuTitle">Challenge</div>
 		<div class="button" onclick="location.href='/challenge/add_challenge/'">Add challenge</div>
+		
+		<div class="menuTitle">History</div>
+		<div class="button" onclick="location.href='/user/recent_actions'">Recent actions</div>
 	{% endif %}
 </div>

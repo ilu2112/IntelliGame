@@ -47,7 +47,7 @@ def add_challenge_v(request):
                                     game_duration = form.data["game_duration"],
                                     judging_program = program)
             challenge.save()
-            # compile program
+            # queue compilation
             compile_challenge.delay(challenge)
             return HttpResponseRedirect('/successful/')
     return render_to_response('ChallengeManagement/add_challenge.xhtml',

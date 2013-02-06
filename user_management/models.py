@@ -4,8 +4,11 @@ Basically this module uses models:
 '''
 
 from django import forms
+from django.db import models
+from django.contrib import admin
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
+
 import re
 
 
@@ -69,22 +72,22 @@ class ChangePasswdForm(forms.Form):
             succ = False
         return succ
 
-    
+
     def check_passwd(self, user):
         if user.check_password(self.data["old_passwd"]):
             return True
         else:
             append_error(self, "old_passwd", "Wrong password.")
             return False
-        
-        
+
+
     def save(self, user):
         user.set_password(self.data["new_passwd"])
         user.save()    
-        
-        
-        
-        
+
+
+
+
 class EditProfileForm(forms.Form):
     first_name = forms.CharField(max_length = 30, required = False)
     last_name = forms.CharField(max_length = 30, required = False)
@@ -96,3 +99,31 @@ class EditProfileForm(forms.Form):
         user.last_name = self.data["last_name"]
         user.email = self.data["email"]
         user.save()
+
+
+
+
+class ActionState(models.Model):
+    name = models.CharField( max_length = 20 )
+
+    def __unicode__(self):
+        return self.name
+
+
+
+
+class RecentAction(models.Model):
+    owner = models.ForeignKey( User )
+    creation_date = models.DateTimeField( auto_now_add = True )
+    message = models.CharField( max_length = 100 )
+    state = models.ForeignKey( ActionState )
+    
+    def __unicode__(self):
+        return self.message
+
+
+
+
+class RecentActionAdmin(admin.ModelAdmin):
+    list_display = ('message', 'state', 'creation_date', 'owner')    
+    list_filter = ['creation_date']

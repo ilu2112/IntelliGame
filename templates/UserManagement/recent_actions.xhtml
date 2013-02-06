@@ -1,0 +1,27 @@
+{% extends "base.xhtml" %}
+
+
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}/style/tables.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="table">
+	<div class="header">
+		<div>Created</div>
+		<div>Message</div>
+		<div>Status</div>
+	</div>
+	
+	{% for action in recent_actions %}
+	<div class="{{action.state}}">
+		<div class="short">{{ action.creation_date }}</div>
+		<div>{{ action.message }}</div>
+		<div class="short">{{ action.state }}</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

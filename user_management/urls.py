@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^show_profile[/]$', user_management.views.show_profile_v),
     url(r'^change_passwd[/]$', user_management.views.change_passwd_v),
     url(r'^edit_profile[/]$', user_management.views.edit_profile_v),
+    url(r'recent_actions[/]$', user_management.views.recent_actions_v)
 )
