@@ -20,16 +20,9 @@ def register_v(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.create_user()
-            return HttpResponseRedirect('../successful/')
+            return HttpResponseRedirect('/successful/')
     return render_to_response('UserManagement/register.xhtml',
                               { "form": form, "title" : "Register" },
-                              context_instance = RequestContext(request));
-
-
-
-def successful_v(request):
-    return render_to_response('base.xhtml',
-                              {"title" : "Success"},
                               context_instance = RequestContext(request));
 
 
@@ -42,7 +35,7 @@ def login_v(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('../successful/')
+                return HttpResponseRedirect('/successful/')
             else:
                 return render_login_v(request, "Account disabled.")
         else:
@@ -61,7 +54,7 @@ def render_login_v(request, error_msg):
 @login_required
 def logout_v(request):
     logout(request)
-    return HttpResponseRedirect('../successful/')
+    return HttpResponseRedirect('/successful/')
 
 
 
@@ -80,7 +73,7 @@ def change_passwd_v(request):
         form = ChangePasswdForm(request.POST)
         if form.is_valid() and form.check_passwd(request.user):
             form.save(request.user)
-            return HttpResponseRedirect('../successful/')
+            return HttpResponseRedirect('/successful/')
     return render_to_response('UserManagement/change_passwd.xhtml',
                               { "form": form, "title" : "Change password" },
                               context_instance = RequestContext(request));
@@ -96,7 +89,7 @@ def edit_profile_v(request):
         form = EditProfileForm(request.POST)
         if form.is_valid():
             form.save(request.user)
-            return HttpResponseRedirect('../successful/')
+            return HttpResponseRedirect('/successful/')
     return render_to_response('UserManagement/edit_profile.xhtml',
                               { "form": form, "title" : "Edit profile" },
                               context_instance = RequestContext(request));

@@ -1,5 +1,10 @@
 # Django settings for IntelliGame project.
 
+# Celery
+import djcelery
+djcelery.setup_loader()
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -45,7 +50,10 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/marcin/aworkspace/IntelliGame/media'
+MEDIA_ROOT = '/home/marcin/aworkspace/IntelliGame/media/'
+
+# location of challenges
+CHALLENGES_ROOT = MEDIA_ROOT + "challenges/"
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -121,6 +129,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'challenge_management',
+    'djcelery'
 )
 
 # A sample logging configuration. The only tangible logging

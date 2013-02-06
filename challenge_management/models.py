@@ -1,8 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.forms import ModelForm
 from django import forms
-
+from django.db import models
+from django.forms import ModelForm
+from django.contrib import admin
+from django.contrib.auth.models import User
 
 
 
@@ -37,10 +37,16 @@ class Program(models.Model):
     binary_file = models.FileField( upload_to = 'tmp/', blank = True )
     compiler = models.ForeignKey( 'Compiler' )
     
+    def __unicode__(self):
+        return self.source_file.name
+    
+    
     
 
 class Challenge(models.Model):
-    title = models.CharField( max_length = 50 )
+    title = models.CharField( max_length = 50, unique = True )
+    creation_date = models.DateField( auto_now_add = True )
+    directory = models.CharField( max_length = 70 )
     short_description = models.TextField()
     description_file = models.FileField( upload_to = 'tmp/' )
     owner = models.ForeignKey( User )
@@ -48,7 +54,17 @@ class Challenge(models.Model):
     game_duration = models.IntegerField()
     judging_program = models.OneToOneField( 'Program' )
     
-    
+    def __unicode__(self):
+        return self.title
+
+
+
+
+class ChallengeAdmin(admin.ModelAdmin):
+    list_display = ('title', 'creation_date', 'owner')    
+    list_filter = ['creation_date']
+
+
 
 
 class ChallengeForm(ModelForm):
@@ -57,4 +73,4 @@ class ChallengeForm(ModelForm):
     
     class Meta:
         model = Challenge
-        exclude = ['judging_program', 'owner']
+        exclude = ['judging_program', 'owner', 'directory', 'creation_date']
