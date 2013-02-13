@@ -8,6 +8,8 @@ from challenge_management.models import ChallengeForm
 from challenge_management.models import Challenge
 from challenge_management.models import Compiler
 from challenge_management.models import Program
+from user_management.models import RecentAction
+from user_management.models import ActionState
 from challenge_management.tasks import compile_challenge
 from IntelliGame.settings import CHALLENGES_ROOT
 
@@ -48,7 +50,11 @@ def add_challenge_v(request):
                                     judging_program = program)
             challenge.save()
             # queue compilation
-            compile_challenge.delay(challenge)
+            recent_action = RecentAction(owner = request.user,
+                                         message = "Challenge validation: " + challenge.title,
+                                         state = ActionState.objects.get(name = 'IN_QUEUE'))
+            recent_action.save()
+            compile_challenge.delay(challenge, recent_action)
             return HttpResponseRedirect('/successful/')
     return render_to_response('ChallengeManagement/add_challenge.xhtml',
                               { "form": form, "title" : "Add Challenge" },

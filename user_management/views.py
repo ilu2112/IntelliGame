@@ -100,7 +100,7 @@ def edit_profile_v(request):
 @login_required
 def recent_actions_v(request):
     # recent_actions = RecentAction.objects.getAll( owner = request.user )
-    recent_actions = RecentAction.objects.filter( owner = request.user )
+    recent_actions = RecentAction.objects.filter( owner = request.user ).order_by( "-creation_date")
     return render_to_response('UserManagement/recent_actions.xhtml',
                               { "recent_actions": recent_actions, "title" : "Recent actions" },
                               context_instance = RequestContext(request));

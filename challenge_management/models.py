@@ -1,3 +1,5 @@
+import shutil
+
 from django import forms
 from django.db import models
 from django.forms import ModelForm
@@ -57,6 +59,9 @@ class Challenge(models.Model):
     def __unicode__(self):
         return self.title
 
+    def delete(self):
+        shutil.rmtree(self.directory)
+        self.judging_program.delete()
 
 
 
