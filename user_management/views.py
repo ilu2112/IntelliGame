@@ -10,8 +10,7 @@ from django.template import RequestContext
 from user_management.models import UserForm
 from user_management.models import ChangePasswdForm
 from user_management.models import EditProfileForm
-from user_management.models import RecentAction
-from user_management.models import append_error
+
 
 
 
@@ -25,6 +24,7 @@ def register_v(request):
     return render_to_response('UserManagement/register.xhtml',
                               { "form": form, "title" : "Register" },
                               context_instance = RequestContext(request));
+
 
 
 
@@ -45,10 +45,12 @@ def login_v(request):
 
 
 
+
 def render_login_v(request, error_msg):
     return render_to_response('UserManagement/login.xhtml',
                               { "title" : "Log in", "error_msg" : error_msg },
                               context_instance = RequestContext(request));
+
 
 
 
@@ -59,11 +61,13 @@ def logout_v(request):
 
 
 
+
 @login_required
 def show_profile_v(request):
     return render_to_response('UserManagement/show_profile.xhtml',
                               { "title" : "Profile details" },
                               context_instance = RequestContext(request));
+
 
 
 
@@ -81,6 +85,7 @@ def change_passwd_v(request):
 
 
 
+
 @login_required
 def edit_profile_v(request):
     form = EditProfileForm(initial = {'first_name' : request.user.first_name,
@@ -93,14 +98,4 @@ def edit_profile_v(request):
             return HttpResponseRedirect('/successful/')
     return render_to_response('UserManagement/edit_profile.xhtml',
                               { "form": form, "title" : "Edit profile" },
-                              context_instance = RequestContext(request));
-                              
-                              
-                              
-@login_required
-def recent_actions_v(request):
-    # recent_actions = RecentAction.objects.getAll( owner = request.user )
-    recent_actions = RecentAction.objects.filter( owner = request.user ).order_by( "-creation_date")
-    return render_to_response('UserManagement/recent_actions.xhtml',
-                              { "recent_actions": recent_actions, "title" : "Recent actions" },
                               context_instance = RequestContext(request));

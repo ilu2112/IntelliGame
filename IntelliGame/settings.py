@@ -129,7 +129,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'challenge_management',
-    'user_management',
+    'task_management',
     'djcelery'
 )
 

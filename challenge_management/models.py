@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 
 
+
 class Compiler(models.Model):
     name = models.CharField(max_length = 50, 
                             blank = False)
@@ -31,6 +32,7 @@ class Compiler(models.Model):
     
     def __unicode__(self):
         return self.name
+
 
 
 
@@ -62,6 +64,7 @@ class Challenge(models.Model):
     def delete(self):
         shutil.rmtree(self.directory)
         self.judging_program.delete()
+
 
 
 

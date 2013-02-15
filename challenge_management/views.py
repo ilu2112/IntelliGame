@@ -1,6 +1,5 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.forms.models import modelformset_factory
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
@@ -8,19 +7,21 @@ from challenge_management.models import ChallengeForm
 from challenge_management.models import Challenge
 from challenge_management.models import Compiler
 from challenge_management.models import Program
-from user_management.models import RecentAction
-from user_management.models import ActionState
-from challenge_management.tasks import compile_challenge
+from task_management.models import RecentAction
+from task_management.models import ActionState
+from task_management.tasks import compile_challenge
 from IntelliGame.settings import CHALLENGES_ROOT
 
 import os
 
 
 
-def upload_file(dir, file):
-    with open(dir + file.name, 'wb+') as destination:
-        for chunk in file.chunks():
+
+def upload_file(directory, file_to_upload):
+    with open(directory + file_to_upload.name, 'wb+') as destination:
+        for chunk in file_to_upload.chunks():
             destination.write(chunk)
+
 
 
 
@@ -31,17 +32,17 @@ def add_challenge_v(request):
         form = ChallengeForm(request.POST, request.FILES)
         if form.is_valid():
             # create directory for a challenge
-            dir = CHALLENGES_ROOT + form.data["title"].replace(" ", "_") + "/"
-            os.makedirs(dir)
+            directory = CHALLENGES_ROOT + form.data["title"].replace(" ", "_") + "/"
+            os.makedirs(directory)
             # upload files
-            upload_file(dir, request.FILES['source_file'])
-            upload_file(dir, request.FILES['description_file'])
+            upload_file(directory, request.FILES['source_file'])
+            upload_file(directory, request.FILES['description_file'])
             # gather data
             program = Program(compiler = Compiler.objects.get(id = form.data["compiler"]),
-                              source_file = dir + request.FILES['source_file'].name )
+                              source_file = directory + request.FILES['source_file'].name )
             program.save()
             challenge = Challenge ( title = form.data["title"],
-                                    directory = dir,
+                                    directory = directory,
                                     short_description = form.data["short_description"],
                                     description_file = dir + request.FILES['description_file'].name,
                                     owner = request.user,

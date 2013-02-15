@@ -5,6 +5,8 @@ from challenge_management.models import Challenge
 from challenge_management.models import ChallengeAdmin
 
 
+
+
 admin.site.register(Compiler)
 admin.site.register(Program)
 admin.site.register(Challenge, ChallengeAdmin)
