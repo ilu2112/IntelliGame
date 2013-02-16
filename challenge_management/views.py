@@ -3,7 +3,7 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
-from challenge_management.models import ChallengeForm
+from challenge_management.forms import ChallengeForm
 from challenge_management.models import Challenge
 from challenge_management.models import Compiler
 from challenge_management.models import Program
@@ -44,7 +44,7 @@ def add_challenge_v(request):
             challenge = Challenge ( title = form.data["title"],
                                     directory = directory,
                                     short_description = form.data["short_description"],
-                                    description_file = dir + request.FILES['description_file'].name,
+                                    description_file = directory + request.FILES['description_file'].name,
                                     owner = request.user,
                                     bots_per_game = form.data["bots_per_game"],
                                     game_duration = form.data["game_duration"],

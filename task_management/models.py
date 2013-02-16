@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import User
 
 
@@ -22,10 +21,3 @@ class RecentAction(models.Model):
     
     def __unicode__(self):
         return self.message
-
-
-
-
-class RecentActionAdmin(admin.ModelAdmin):
-    list_display = ('message', 'state', 'creation_date', 'owner')    
-    list_filter = ['creation_date']

@@ -2,7 +2,13 @@ from django.contrib import admin
 from challenge_management.models import Compiler
 from challenge_management.models import Program
 from challenge_management.models import Challenge
-from challenge_management.models import ChallengeAdmin
+
+
+
+
+class ChallengeAdmin(admin.ModelAdmin):
+    list_display = ('title', 'creation_date', 'owner')    
+    list_filter = ['creation_date']
 
 
 

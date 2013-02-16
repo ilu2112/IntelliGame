@@ -1,9 +1,6 @@
 import shutil
 
-from django import forms
 from django.db import models
-from django.forms import ModelForm
-from django.contrib import admin
 from django.contrib.auth.models import User
 
 
@@ -64,21 +61,3 @@ class Challenge(models.Model):
     def delete(self):
         shutil.rmtree(self.directory)
         self.judging_program.delete()
-
-
-
-
-class ChallengeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'creation_date', 'owner')    
-    list_filter = ['creation_date']
-
-
-
-
-class ChallengeForm(ModelForm):
-    source_file = forms.FileField()
-    compiler = forms.ModelChoiceField( queryset = Compiler.objects.all() )
-    
-    class Meta:
-        model = Challenge
-        exclude = ['judging_program', 'owner', 'directory', 'creation_date']

@@ -1,7 +1,13 @@
 from django.contrib import admin
 from task_management.models import RecentAction
 from task_management.models import ActionState
-from task_management.models import RecentActionAdmin
+
+
+
+
+class RecentActionAdmin(admin.ModelAdmin):
+    list_display = ('message', 'state', 'creation_date', 'owner')    
+    list_filter = ['creation_date']
 
 
 
