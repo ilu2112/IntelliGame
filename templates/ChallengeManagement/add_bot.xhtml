@@ -1,0 +1,28 @@
+{% extends "base.xhtml" %}
+
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}style/forms.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<form enctype="multipart/form-data" method="post" action="./">
+	{% csrf_token %}
+	<fieldset>
+		<ol>
+			{% for field in form %}
+			<li>
+				{{ field.errors }}
+				{{ field.label_tag }}
+				{% if field.field.required %}
+					<req>*</req>
+				{% else %}
+					<req>&nbsp;</req>
+				{% endif %} : {{ field }}
+			</li>
+			{% endfor %}
+			<input class="submit" type="submit" value="Add bot"/>
+		</ol>
+	</fieldset>
+</form>
+
+{% endblock %}

@@ -3,13 +3,16 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
+from challenge_management.forms import BotForm
 from challenge_management.forms import ChallengeForm
+from challenge_management.models import Bot
 from challenge_management.models import Challenge
 from challenge_management.models import Compiler
 from challenge_management.models import Program
 from task_management.models import RecentAction
 from task_management.models import ActionState
 from task_management.tasks import compile_challenge
+from task_management.tasks import compile_bot
 from IntelliGame.settings import CHALLENGES_ROOT
 
 import os
@@ -49,7 +52,6 @@ def add_challenge_v(request):
                                     bots_per_game = form.data["bots_per_game"],
                                     game_duration = form.data["game_duration"],
                                     judging_program = program)
-            challenge.save()
             # queue compilation
             recent_action = RecentAction(owner = request.user,
                                          message = "Challenge validation: " + challenge.title,
@@ -59,4 +61,40 @@ def add_challenge_v(request):
             return HttpResponseRedirect('/successful/')
     return render_to_response('ChallengeManagement/add_challenge.xhtml',
                               { "form": form, "title" : "Add Challenge" },
+                              context_instance = RequestContext(request));
+
+
+
+
+@login_required
+def add_bot_v(request):
+    form = BotForm()
+    if request.method == 'POST':
+        form = BotForm(request.POST, request.FILES)
+        if form.is_valid():
+            # get challenge
+            challenge = Challenge.objects.get( id = form.data["target_challenge"] )
+            # create directory for a bot
+            directory = challenge.directory + "bots/" + form.data["name"].replace(" ", "_") + "/"
+            os.makedirs(directory)
+            # upload source file
+            upload_file(directory, request.FILES['source_file'])
+            # gather data
+            program = Program(compiler = Compiler.objects.get(id = form.data["compiler"]),
+                              source_file = directory + request.FILES['source_file'].name )
+            program.save()
+            bot = Bot( name = form.data["name"], 
+                       playing_program = program,
+                       directory = directory,
+                       owner = request.user,
+                       target_challenge = challenge)
+            # delay compilation
+            recent_action = RecentAction(owner = request.user,
+                                         message = "Bot validation: " + bot.name,
+                                         state = ActionState.objects.get(name = 'IN_QUEUE'))
+            recent_action.save()
+            compile_bot.delay(bot, recent_action)
+            return HttpResponseRedirect('/successful/')
+    return render_to_response('ChallengeManagement/add_bot.xhtml',
+                              { "form": form, "title" : "Add Bot" },
                               context_instance = RequestContext(request));

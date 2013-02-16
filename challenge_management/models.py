@@ -26,7 +26,7 @@ class Compiler(models.Model):
                                                         Example 3: leave blank for c++ compiler""")
     ignore_binary_extension = models.BooleanField(help_text = """Enable this when run command ignores binary file's extension. <br />
                                                                  Example: java Main, NOT java Main.class.""")
-    
+
     def __unicode__(self):
         return self.name
 
@@ -37,27 +37,47 @@ class Program(models.Model):
     source_file = models.FileField( upload_to = 'tmp/' )
     binary_file = models.FileField( upload_to = 'tmp/', blank = True )
     compiler = models.ForeignKey( 'Compiler' )
-    
+
     def __unicode__(self):
         return self.source_file.name
-    
-    
-    
+
+
+
 
 class Challenge(models.Model):
     title = models.CharField( max_length = 50, unique = True )
-    creation_date = models.DateField( auto_now_add = True )
-    directory = models.CharField( max_length = 70 )
+    creation_date = models.DateTimeField( auto_now_add = True )
+    directory = models.CharField( max_length = 255 )
     short_description = models.TextField()
     description_file = models.FileField( upload_to = 'tmp/' )
     owner = models.ForeignKey( User )
     bots_per_game = models.IntegerField()
     game_duration = models.IntegerField()
     judging_program = models.OneToOneField( 'Program' )
-    
+
     def __unicode__(self):
         return self.title
 
     def delete(self):
         shutil.rmtree(self.directory)
         self.judging_program.delete()
+
+
+
+
+class Bot(models.Model):
+    name = models.CharField( max_length = 50 )
+    playing_program = models.OneToOneField( 'Program' )
+    directory = models.CharField( max_length = 255 )
+    creation_date = models.DateTimeField( auto_now_add = True )
+    owner = models.ForeignKey( User )
+    target_challenge = models.ForeignKey( Challenge )
+    played_games = models.PositiveIntegerField( default = 0 )
+    total_score = models.IntegerField( default = 0 )
+
+    def __unicode__(self):
+        return self.name
+    
+    def delete(self):
+        shutil.rmtree(self.directory)
+        self.playing_program.delete()
