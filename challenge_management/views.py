@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from challenge_management.forms import BotForm
@@ -90,7 +91,8 @@ def add_bot_v(request):
                        target_challenge = challenge)
             # delay compilation
             recent_action = RecentAction(owner = request.user,
-                                         message = "Bot validation: " + bot.name,
+                                         message = "Bot validation: " + bot.name
+                                                    + " (for challenge: " + challenge.title + ")",
                                          state = ActionState.objects.get(name = 'IN_QUEUE'))
             recent_action.save()
             compile_bot.delay(bot, recent_action)
@@ -98,3 +100,40 @@ def add_bot_v(request):
     return render_to_response('ChallengeManagement/add_bot.xhtml',
                               { "form": form, "title" : "Add Bot" },
                               context_instance = RequestContext(request));
+
+
+
+
+@login_required
+def browse_challenges_v(request):
+    challenges = Challenge.objects.all()
+    bots_count = dict()
+    for challenge in challenges:
+        bots_count[challenge.id] = Bot.objects.filter(target_challenge = challenge).count()
+    return render_to_response('ChallengeManagement/browseChallenges.xhtml',
+                              { "challenges" : challenges, "bots_count" : bots_count,
+                                "title" : "Browse challenges" },
+                              context_instance = RequestContext(request));
+
+
+
+
+@login_required
+def challenge_details_v(request, challenge_id):
+    challenge = Challenge.objects.get( id = challenge_id )
+    return render_to_response('ChallengeManagement/challengeDetails.xhtml',
+                              { "challenge" : challenge, "title" : challenge.title },
+                              context_instance = RequestContext(request));
+
+
+
+
+@login_required
+def download_challenge_desc_v(request, challenge_id):
+    challenge = Challenge.objects.get( id = challenge_id )
+    filename = challenge.description_file.name
+    response = HttpResponse()
+    # response['content_type'] = 'gzip'
+    # response['Content-Disposition'] = 'attachment; filename="{filename}"'.format(filename = filename)
+    # response['Content-Disposition'] = 'gzip; filename="desc.tar.gz"'
+    return response

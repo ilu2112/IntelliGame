@@ -1,0 +1,19 @@
+.shortDescription {
+	margin-left: 70px;
+	margin-right: 70px;
+	text-align: justify;
+	border-left: 2px solid #dddddd;
+	border-right: 2px solid #dddddd;
+	 padding: 0px 15px 0px 15px;
+	font-style: italic;
+	color: #333333;
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-weight: 400;
+	font-size: 17px;
+	background: #f0f0f0;
+}
+
+.buttonHolder {
+	float: left;
+	margin-left: 70px;
+}

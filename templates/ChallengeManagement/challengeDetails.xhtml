@@ -1,0 +1,20 @@
+{% extends "base.xhtml" %}
+
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}ChallengeManagement/style/challenge_details.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+	<div class="shortDescription">
+		{{ challenge.short_description }}	</div>
+	
+	<br />
+	
+	<div class="buttonHolder">
+		<button onclick="document.location='download/'">Download full description</button>
+		&nbsp;&nbsp;&nbsp;
+		<button>Show rankings</button>
+	</div>
+	
+{% endblock %}

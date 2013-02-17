@@ -52,7 +52,7 @@ class Challenge(models.Model):
     description_file = models.FileField( upload_to = 'tmp/' )
     owner = models.ForeignKey( User )
     bots_per_game = models.IntegerField()
-    game_duration = models.IntegerField()
+    game_duration = models.IntegerField( verbose_name="Game's duration [s]" )
     judging_program = models.OneToOneField( 'Program' )
 
     def __unicode__(self):

@@ -130,7 +130,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'challenge_management',
     'task_management',
-    'djcelery'
+    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging

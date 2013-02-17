@@ -1,0 +1,29 @@
+{% extends "base.xhtml" %}
+
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}/style/tables.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="table">
+	<div class="header">
+		<div class="short">Created</div>
+		<div>Title</div>
+		<div class="short">Bot's count</div>
+	</div>
+	
+	{% load dictionary_tags %}
+	
+	{% for challenge in challenges %}
+		<div class="clickable" onclick="document.location='{{ challenge.id }}/'">
+			<div>{{ challenge.creation_date|date }}</div>
+			<div>{{ challenge.title }}</div>
+			<div>
+				{{ bots_count|get_value:challenge.id }}
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+
+{% endblock %}
