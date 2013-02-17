@@ -68,8 +68,9 @@ def add_challenge_v(request):
 
 
 @login_required
-def add_bot_v(request):
-    form = BotForm()
+def add_bot_v(request, form = 0):
+    if form == 0:
+        form = BotForm()
     if request.method == 'POST':
         form = BotForm(request.POST, request.FILES)
         if form.is_valid():
@@ -132,8 +133,18 @@ def challenge_details_v(request, challenge_id):
 def download_challenge_desc_v(request, challenge_id):
     challenge = Challenge.objects.get( id = challenge_id )
     filename = challenge.description_file.name
-    response = HttpResponse()
-    # response['content_type'] = 'gzip'
-    # response['Content-Disposition'] = 'attachment; filename="{filename}"'.format(filename = filename)
-    # response['Content-Disposition'] = 'gzip; filename="desc.tar.gz"'
+    response = HttpResponse( mimetype="application/" + os.path.splitext(filename)[1][1:] )
+    response['Content-Disposition'] = 'filename="{filename}"'.format(filename = filename.split('/')[-1])
+    for chunk in challenge.description_file.chunks():
+        response.write(chunk)
     return response
+
+
+
+
+@login_required
+def redirect_add_bot_v(request, challenge_id):
+    form = BotForm( initial = {'target_challenge' : challenge_id})
+    form.data['target_challenge'] = challenge_id
+    print challenge_id
+    return add_bot_v(request, form)

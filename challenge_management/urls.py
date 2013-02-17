@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^browse_challenges[/]$', challenge_management.views.browse_challenges_v),
     url(r'^browse_challenges/(\d+)[/]$', challenge_management.views.challenge_details_v),
     url(r'^browse_challenges/(\d+)/download[/]$', challenge_management.views.download_challenge_desc_v),
+    url(r'^browse_challenges/(\d+)/add_bot[/]$', challenge_management.views.redirect_add_bot_v),
 )
