@@ -105,7 +105,6 @@ def add_bot_v(request, form = 0):
 
 
 
-@login_required
 def browse_challenges_v(request):
     challenges = Challenge.objects.all()
     bots_count = dict()
@@ -119,7 +118,6 @@ def browse_challenges_v(request):
 
 
 
-@login_required
 def challenge_details_v(request, challenge_id):
     challenge = Challenge.objects.get( id = challenge_id )
     return render_to_response('ChallengeManagement/challengeDetails.xhtml',
@@ -129,7 +127,6 @@ def challenge_details_v(request, challenge_id):
 
 
 
-@login_required
 def download_challenge_desc_v(request, challenge_id):
     challenge = Challenge.objects.get( id = challenge_id )
     filename = challenge.description_file.name

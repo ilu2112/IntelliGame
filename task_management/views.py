@@ -6,8 +6,17 @@ from task_management.models import RecentAction
 
 
 @login_required
-def recent_actions_v(request):
+def my_actions_v(request):
     recent_actions = RecentAction.objects.filter( owner = request.user ).order_by( "-creation_date")
+    return render_to_response('TaskManagement/my_actions.xhtml',
+                              { "recent_actions": recent_actions, "title" : "My actions" },
+                              context_instance = RequestContext(request));
+
+
+
+
+def recent_actions_v(request):
+    recent_actions = RecentAction.objects.all().order_by( "-creation_date")
     return render_to_response('TaskManagement/recent_actions.xhtml',
                               { "recent_actions": recent_actions, "title" : "Recent actions" },
                               context_instance = RequestContext(request));

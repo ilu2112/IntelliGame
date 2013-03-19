@@ -10,7 +10,6 @@
 
 <div class="table">
 	<div class="header">
-		<div class="short">Author</div>
 		<div class="short">Created</div>
 		<div>Message</div>
 		<div class="short">Status</div>
@@ -18,7 +17,6 @@
 	
 	{% for action in recent_actions %}
 	<div class="{{action.state}}">
-		<div class="short">{{ action.owner.username }}</div>
 		<div class="short">{{ action.creation_date }}</div>
 		<div>{{ action.message }}</div>
 		<div class="short">{{ action.state }}</div>

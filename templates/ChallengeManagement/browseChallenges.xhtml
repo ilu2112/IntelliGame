@@ -15,7 +15,7 @@
 	{% load dictionary_tags %}
 	
 	{% for challenge in challenges %}
-		<div class="clickable" onclick="document.location='{{ challenge.id }}/'">
+		<div class="clickable" onclick="document.location='/challenge/{{ challenge.id }}/'">
 			<div>{{ challenge.creation_date|date }}</div>
 			<div>{{ challenge.title }}</div>
 			<div>

@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^change_passwd[/]$', user_management.views.change_passwd_v),
     url(r'^edit_profile[/]$', user_management.views.edit_profile_v),
     
-    url(r'recent_actions[/]$', task_management.views.recent_actions_v)
+    url(r'my_actions[/]$', task_management.views.my_actions_v),
+    url(r'recent_actions[/]$', task_management.views.recent_actions_v),
 )

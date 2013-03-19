@@ -9,13 +9,17 @@
 		<div class="button" onclick="location.href='/user/change_passwd/'">Change password</div>
 		<div class="button" onclick="location.href='/user/logout/'">Log out</div>
 	{% endif %}
-	{% if user.is_authenticated %}
+		
 		<div class="menuTitle">Challenge</div>
-		<div class="button" onclick="location.href='/challenge/add_challenge/'">Add challenge</div>
 		<div class="button" onclick="location.href='/challenge/browse_challenges/'">Browse challenges</div>
+	{% if user.is_authenticated %}
+		<div class="button" onclick="location.href='/challenge/add_challenge/'">Add challenge</div>
 		<div class="button" onclick="location.href='/challenge/add_bot/'">Add bot</div>
+	{% endif %}
 		
 		<div class="menuTitle">History</div>
 		<div class="button" onclick="location.href='/user/recent_actions'">Recent actions</div>
+	{% if user.is_authenticated %}
+		<div class="button" onclick="location.href='/user/my_actions'">My actions</div>
 	{% endif %}
 </div>
