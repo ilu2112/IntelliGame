@@ -17,7 +17,7 @@
 	
 	{% for action in recent_actions %}
 	<div class="{{action.state}}">
-		<div class="short">{{ action.creation_date }}</div>
+		<div class="short">{{ action.creation_date|date:"Y/m/d H:i" }}</div>
 		<div>{{ action.message }}</div>
 		<div class="short">{{ action.state }}</div>
 	</div>
