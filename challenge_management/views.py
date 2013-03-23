@@ -110,7 +110,7 @@ def browse_challenges_v(request):
     bots_count = dict()
     for challenge in challenges:
         bots_count[challenge.id] = Bot.objects.filter(target_challenge = challenge).count()
-    return render_to_response('ChallengeManagement/browseChallenges.xhtml',
+    return render_to_response('ChallengeManagement/browse_challenges.xhtml',
                               { "challenges" : challenges, "bots_count" : bots_count,
                                 "title" : "Browse challenges" },
                               context_instance = RequestContext(request));
@@ -120,7 +120,7 @@ def browse_challenges_v(request):
 
 def challenge_details_v(request, challenge_id):
     challenge = Challenge.objects.get( id = challenge_id )
-    return render_to_response('ChallengeManagement/challengeDetails.xhtml',
+    return render_to_response('ChallengeManagement/challenge_details.xhtml',
                               { "challenge" : challenge, "title" : challenge.title },
                               context_instance = RequestContext(request));
 
