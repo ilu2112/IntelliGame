@@ -3,7 +3,6 @@ body {
 	margin: 10px;
 }
 
-
 div.page {
 	width: 1100px;
 	margin-left: auto;
@@ -16,23 +15,11 @@ div.page {
 	box-shadow: 0 0 3px 3px #666;
 }
 
-
 div.frontHeader {
 	position: relative;
 	width: 1100px;
 	height: 160px;
-    background-image:url("../img/header_back.png");
-	/* Gradient for different browsers */
-    /*
-    background: rgb(146,137,139);
-    background: -moz-linear-gradient(top,  rgba(146,137,139,1) 1%, rgba(83,74,76,1) 60%, rgba(46,46,46,1) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(146,137,139,1)), color-stop(60%,rgba(83,74,76,1)), color-stop(100%,rgba(46,46,46,1)));
-	background: -webkit-linear-gradient(top,  rgba(146,137,139,1) 1%,rgba(83,74,76,1) 60%,rgba(46,46,46,1) 100%);
-	background: -o-linear-gradient(top,  rgba(146,137,139,1) 1%,rgba(83,74,76,1) 60%,rgba(46,46,46,1) 100%);
-	background: -ms-linear-gradient(top,  rgba(146,137,139,1) 1%,rgba(83,74,76,1) 60%,rgba(46,46,46,1) 100%);
-	background: linear-gradient(to bottom,  rgba(146,137,139,1) 1%,rgba(83,74,76,1) 60%,rgba(46,46,46,1) 100%);
-    */
-    /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#92898b', endColorstr='#2e2e2e',GradientType=0 ); */
+	background-image: url("../img/header_back.png");
 }
 
 div.frontContent {
@@ -133,3 +120,6 @@ button {
 	color: #333333;
 }
 
+textarea {
+	resize: none;
+}
