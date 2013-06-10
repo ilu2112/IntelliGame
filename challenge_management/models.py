@@ -81,3 +81,18 @@ class Bot(models.Model):
     def delete(self):
         shutil.rmtree(self.directory)
         self.playing_program.delete()
+
+
+
+
+class Battle(models.Model):
+    challenge = models.ForeignKey( Challenge )
+
+
+
+
+class BattleResult(models.Model):
+    battle = models.ForeignKey( Battle )
+    bot = models.ForeignKey( Bot )
+    comment = models.CharField( max_length = 128 )
+    score = models.IntegerField()
