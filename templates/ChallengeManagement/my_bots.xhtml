@@ -19,7 +19,7 @@
 	{% load dictionary_tags %}
 	
 	{% for bot in bots %}
-	<div class="{{action.state}}">
+	<div class="clickable" onclick="document.location='/bot/{{ bot.id }}/'">
 		<div>{{ bot.name }}</div>
 		<div>{{ bot.target_challenge.title }}</div>
 		<div>{{ games|get_value:bot }}</div>

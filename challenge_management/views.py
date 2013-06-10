@@ -155,7 +155,7 @@ def redirect_add_bot_v(request, challenge_id):
 
 
 
-#@login_required
+@login_required
 def my_bots_v(request):
     bots = Bot.objects.filter(owner = request.user).all()
     scores = dict()
