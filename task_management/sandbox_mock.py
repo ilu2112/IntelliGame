@@ -8,4 +8,5 @@ class SandBox():
         results = []
         for _ in range(0, self.bots_exec_commands.__len__()):
             results.append(0)
+        results[-1] = 1;
         return results

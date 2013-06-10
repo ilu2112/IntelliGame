@@ -3,6 +3,8 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+from django.db.models import Count
 
 from challenge_management.forms import BotForm
 from challenge_management.forms import ChallengeForm
@@ -10,6 +12,7 @@ from challenge_management.models import Bot
 from challenge_management.models import Challenge
 from challenge_management.models import Compiler
 from challenge_management.models import Program
+from challenge_management.models import BattleResult
 from task_management.models import RecentAction
 from task_management.models import ActionState
 from task_management.tasks import compile_challenge
@@ -148,3 +151,19 @@ def redirect_add_bot_v(request, challenge_id):
     form.data['target_challenge'] = challenge_id
     print challenge_id
     return add_bot_v(request, form)
+
+
+
+
+#@login_required
+def my_bots_v(request):
+    bots = Bot.objects.filter(owner = request.user).all()
+    scores = dict()
+    games = dict()
+    for bot in bots:
+        scores[bot] = BattleResult.objects.filter(bot = bot).aggregate(Sum('score'))['score__sum']
+        games[bot] = BattleResult.objects.filter(bot = bot).count()
+    return render_to_response('ChallengeManagement/my_bots.xhtml',
+                              { "bots" : bots, "title" : "My bots",
+                               "games" : games, "scores" : scores },
+                              context_instance = RequestContext(request));

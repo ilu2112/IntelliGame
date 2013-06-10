@@ -1,0 +1,31 @@
+{% extends "base.xhtml" %}
+
+
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}/style/tables.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="table">
+	<div class="header">
+		<div>Bot</div>
+		<div>Challenge</div>
+		<div>Games played</div>
+		<div>Score</div>
+	</div>
+	
+	{% load dictionary_tags %}
+	
+	{% for bot in bots %}
+	<div class="{{action.state}}">
+		<div>{{ bot.name }}</div>
+		<div>{{ bot.target_challenge.title }}</div>
+		<div>{{ games|get_value:bot }}</div>
+		<div>{{ scores|get_value:bot }}</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
