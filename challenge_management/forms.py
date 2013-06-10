@@ -38,7 +38,7 @@ class BotForm(ModelForm):
 
     class Meta:
         model = Bot
-        exclude = ['playing_program', 'owner', 'creation_date', 'played_games', 'total_score', 'directory']
+        exclude = ['playing_program', 'owner', 'creation_date', 'directory']
 
     def is_valid(self):
         succ = forms.ModelForm.is_valid(self)

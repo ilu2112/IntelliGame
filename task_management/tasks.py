@@ -2,22 +2,25 @@ import os
 import subprocess
 from celery import task
 from subprocess import CalledProcessError
+from itertools import combinations
 
 from task_management.models import ActionState
-
+from challenge_management.models import Bot
+from challenge_management.models import Battle
+from challenge_management.models import BattleResult
+from sandbox_mock import SandBox
 
 
 
 def compile_program(program):
     # prepare compilation command
-    compiler = program.compiler
-    source = program.source_file.path
+    command = program.get_compile_command()
+    
+    # prepare binary output file
     binary = os.path.splitext(program.source_file.path)[0]
+    compiler = program.compiler
     if (compiler.ignore_binary_extension == False and compiler.binary_extension != None):
         binary = binary + '.' + compiler.binary_extension
-    command = compiler.compile_command.format(source_file = source, binary_file = binary)
-    
-    print command
     
     # compile
     subprocess.check_output(command.split(' '), stderr = subprocess.STDOUT)
@@ -71,3 +74,42 @@ def compile_bot(bot, recent_action):
         bot.delete()
 
     return 'Bot error: ' + bot.name
+
+
+
+
+@task()
+def enqueue_bots_battles(bot):
+    if Bot.objects.filter(name = bot.name, target_challenge = bot.target_challenge).exists():
+        # get target challenge
+        challenge = bot.target_challenge
+        # gather all possible opponents
+        possible_opponents = set(combinations(Bot.objects.all().exclude(pk = bot.pk), challenge.bots_per_game - 1))
+        # delay every possible battle
+        for opponents in possible_opponents:
+            bots = list(opponents)
+            bots.append(bot)
+            run_battle.delay(bots, challenge)
+
+
+
+
+@task()
+def run_battle(bots, challenge):
+    # generate run commands
+    judge_exec_command = challenge.judging_program.get_run_command()
+    bots_exec_commands = []
+    for bot in bots:
+        bots_exec_commands.append(bot.playing_program.get_run_command())
+    # run sandbox
+    sb = SandBox(judge_exec_command, bots_exec_commands, challenge.game_duration)
+    scores = sb.run()
+    # save results
+    battle = Battle(challenge = challenge)
+    battle.save()
+    for i in range(0, bots.__len__()):
+        battle_result = BattleResult(battle = battle,
+                                     bot = bots[i],
+                                     comment = "",
+                                     score = scores[i])
+        battle_result.save()
