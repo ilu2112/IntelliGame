@@ -2,7 +2,6 @@ import select
 
 from subprocess import Popen
 from subprocess import PIPE
-from subprocess import Popen
 
 
 
@@ -25,7 +24,7 @@ class SandBox():
             if self.is_ready_for_read(self.judge_process):
                 self.dispatch_judge_message(self.judge_process.stdout.readline())
             if self.is_ready_for_read(self.bot_processes[counter - 1]):
-                 self.dispatch_bot_message(counter, self.bot_processes[counter - 1].stdout.readline())
+                self.dispatch_bot_message(counter, self.bot_processes[counter - 1].stdout.readline())
             counter = counter + 1
             if counter > self.bot_processes.__len__():
                 counter = 1
