@@ -16,6 +16,8 @@ from task_management.tasks import compile_challenge
 from task_management.tasks import compile_bot
 from IntelliGame.settings import CHALLENGES_ROOT
 
+from celery import chain
+
 import os
 
 
@@ -96,7 +98,8 @@ def add_bot_v(request, form = 0):
                                                     + " (for challenge: " + challenge.title + ")",
                                          state = ActionState.objects.get(name = 'IN_QUEUE'))
             recent_action.save()
-            compile_bot.delay(bot, recent_action)
+            # compile_bot.delay(bot, recent_action)
+            chain(compile_bot(bot, recent_action))
             return HttpResponseRedirect('/successful/')
     return render_to_response('ChallengeManagement/add_bot.xhtml',
                               { "form": form, "title" : "Add Bot" },

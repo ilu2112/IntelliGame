@@ -13,9 +13,11 @@ def compile_program(program):
     compiler = program.compiler
     source = program.source_file.path
     binary = os.path.splitext(program.source_file.path)[0]
-    if (compiler.ignore_binary_extension == False):
+    if (compiler.ignore_binary_extension == False and compiler.binary_extension != None):
         binary = binary + '.' + compiler.binary_extension
     command = compiler.compile_command.format(source_file = source, binary_file = binary)
+    
+    print command
     
     # compile
     subprocess.check_output(command.split(' '), stderr = subprocess.STDOUT)
