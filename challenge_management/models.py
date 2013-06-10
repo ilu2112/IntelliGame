@@ -99,6 +99,7 @@ class Bot(models.Model):
 
 class Battle(models.Model):
     challenge = models.ForeignKey( Challenge )
+    creation_date = models.DateTimeField( auto_now_add = True )
 
 
 

@@ -3,6 +3,7 @@
 
 {% block additional_headers %}
 <link href="{{ STATIC_URL }}UserManagement/style/profile.css" rel="stylesheet" type="text/css" />
+<link href="{{ STATIC_URL }}/style/tables.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 
@@ -62,5 +63,31 @@
 {% if bot.owner == user %}
 	<button onclick="document.location='download/'">Download source</button>
 {% endif %}
+
+<br />
+<br />
+
+<!-- Bot's battles -->
+
+<div class="subTitle">
+	Battles
+</div>
+
+{% load dictionary_tags %}
+
+<div class="table">
+	<div class="header">
+		<div>Date</div>
+		<div>Score</div>
+	</div>
+	
+	{% for battle in battles %}
+		<div class="clickable" onclick="document.location='/challenge/battle/{{ battle.id }}'">
+			<div>{{ battle.creation_date }}</div>
+			<div>{{ battle_scores|get_value:battle }}</div>
+		</div>
+	{% endfor %}
+	
+</div>
 
 {% endblock %}

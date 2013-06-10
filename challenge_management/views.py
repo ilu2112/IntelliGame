@@ -182,10 +182,18 @@ def bot_v(request, bot_id):
         b_score = BattleResult.objects.filter(bot = b).aggregate(Sum('score'))['score__sum']
         if b_score > score:
             rank = rank + 1
+    # find battles
+    battles = []
+    battle_scores = {}
+    battle_results = BattleResult.objects.filter(bot = bot).all()
+    for battle_result in battle_results:
+        battles.append(battle_result.battle)
+        battle_scores[battle_result.battle] = battle_result.score
     return render_to_response('ChallengeManagement/view_bot.xhtml',
                               { "bot" : bot, "title" : bot.name,
                                "games" : games, "score" : score,
-                               "rank" : rank },
+                               "rank" : rank, "battles" : battles,
+                               "battle_scores" : battle_scores },
                               context_instance = RequestContext(request));
 
 
