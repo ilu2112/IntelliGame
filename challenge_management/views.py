@@ -167,3 +167,38 @@ def my_bots_v(request):
                               { "bots" : bots, "title" : "My bots",
                                "games" : games, "scores" : scores },
                               context_instance = RequestContext(request));
+
+
+
+
+def bot_v(request, bot_id):
+    bot = Bot.objects.filter(pk = bot_id).all()[0]
+    games = BattleResult.objects.filter(bot = bot).count()
+    score = BattleResult.objects.filter(bot = bot).aggregate(Sum('score'))['score__sum']
+    # find rank
+    bots = Bot.objects.filter(target_challenge = bot.target_challenge).all()
+    rank = 1
+    for b in bots:
+        b_score = BattleResult.objects.filter(bot = b).aggregate(Sum('score'))['score__sum']
+        if b_score > score:
+            rank = rank + 1
+    return render_to_response('ChallengeManagement/view_bot.xhtml',
+                              { "bot" : bot, "title" : bot.name,
+                               "games" : games, "score" : score,
+                               "rank" : rank },
+                              context_instance = RequestContext(request));
+
+
+
+
+def download_bots_source_v(request, bot_id):
+    bot = Bot.objects.get( id = bot_id )
+    if request.user == bot.owner:
+        filename = bot.playing_program.source_file.name
+        response = HttpResponse( mimetype="application/" + os.path.splitext(filename)[1][1:] )
+        response['Content-Disposition'] = 'filename="{filename}"'.format(filename = filename.split('/')[-1])
+        for chunk in bot.playing_program.source_file.chunks():
+            response.write(chunk)
+        return response
+    else:
+        return bot_v(request, bot_id)

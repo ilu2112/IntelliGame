@@ -1,0 +1,66 @@
+{% extends "base.xhtml" %}
+
+
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}UserManagement/style/profile.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+
+<ul>
+	<li>
+		<div class="name">
+			name
+		</div>
+		<div class="value">
+			{{ bot.name }}
+		</div>
+	</li>
+	<li>
+		<div class="name">
+			rank
+		</div>
+		<div class="value">
+			{{ rank }}
+		</div>
+	</li>
+	<li>
+		<div class="name">
+			games played
+		</div>
+		<div class="value">
+			{{ games }}
+		</div>
+	</li>
+	<li>
+		<div class="name">
+			score
+		</div>
+		<div class="value">
+			{{ score }}
+		</div>
+	</li>
+	<li>
+		<div class="name">
+			creation date
+		</div>
+		<div class="value">
+			{{ bot.creation_date }}
+		</div>
+	</li>
+	<li>
+		<div class="name">
+			compiler
+		</div>
+		<div class="value">
+			{{ bot.playing_program.compiler }}
+		</div>
+	</li>
+</ul>
+
+{% if bot.owner == user %}
+	<button onclick="document.location='download/'">Download source</button>
+{% endif %}
+
+{% endblock %}
