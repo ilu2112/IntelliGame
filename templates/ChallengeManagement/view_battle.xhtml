@@ -1,0 +1,54 @@
+{% extends "base.xhtml" %}
+
+
+{% block additional_headers %}
+	<link href="{{ STATIC_URL }}UserManagement/style/profile.css" rel="stylesheet" type="text/css" />
+	<link href="{{ STATIC_URL }}/style/tables.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+	
+<ul>
+	<li>
+		<div class="name">
+			challenge
+		</div>
+		<div class="value clickable" onclick="document.location='/challenge/{{ battle.challenge.id }}'">
+			{{ battle.challenge.title }}
+		</div>
+	</li>
+	<li>
+		<div class="name">
+			battle date
+		</div>
+		<div class="value">
+			{{ battle.creation_date }}
+		</div>
+	</li>
+</ul>
+
+
+<br />
+<br />
+
+<div class="subTitle">
+	Results
+</div>
+
+<div class="table">
+	<div class="header">
+		<div>Bot</div>
+		<div>Score</div>
+	</div>
+	
+	{% for battle_result in battle_results %}
+		<div class="clickable" onclick="document.location='/challenge/bot/{{ battle_result.bot.id }}'">
+			<div>{{ battle_result.bot.name }}</div>
+			<div>{{ battle_result.score }}</div>
+		</div>
+	{% endfor %}
+	
+</div>
+
+{% endblock %}

@@ -4,7 +4,6 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
-from django.db.models import Count
 
 from challenge_management.forms import BotForm
 from challenge_management.forms import ChallengeForm
@@ -13,6 +12,7 @@ from challenge_management.models import Challenge
 from challenge_management.models import Compiler
 from challenge_management.models import Program
 from challenge_management.models import BattleResult
+from challenge_management.models import Battle
 from task_management.models import RecentAction
 from task_management.models import ActionState
 from task_management.tasks import compile_challenge
@@ -210,3 +210,14 @@ def download_bots_source_v(request, bot_id):
         return response
     else:
         return bot_v(request, bot_id)
+
+
+
+
+def battle_v(request, battle_id):
+    battle = Battle.objects.get(id = battle_id)
+    battle_results = BattleResult.objects.filter(battle = battle).all()
+    return render_to_response('ChallengeManagement/view_battle.xhtml',
+                              { "title" : "Battle summary", "battle" : battle,
+                                "battle_results" : battle_results },
+                              context_instance = RequestContext(request));
