@@ -1,0 +1,28 @@
+{% extends "base.xhtml" %}
+
+
+{% block additional_headers %}
+<link href="{{ STATIC_URL }}/style/tables.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="table">
+	<div class="header">
+		<div>Rank</div>
+		<div>Bot</div>
+		<div>Score</div>
+	</div>
+	
+	
+	{% for rank, score, bot in bots_with_ranks %}
+	<div class="clickable" onclick="document.location='/challenge/bot/{{ bot.id }}/'">
+		<div>{{ rank }}</div>
+		<div>{{ bot.name }}</div>
+		<div>{{ score }}</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

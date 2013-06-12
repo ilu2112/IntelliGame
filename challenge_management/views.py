@@ -221,3 +221,31 @@ def battle_v(request, battle_id):
                               { "title" : "Battle summary", "battle" : battle,
                                 "battle_results" : battle_results },
                               context_instance = RequestContext(request));
+
+
+
+
+def challenge_rank_v(request, challenge_id):
+    challenge = Challenge.objects.get(id = challenge_id)
+    # gather data
+    bots = Bot.objects.filter(target_challenge = challenge)
+    scores = {}
+    for bot in bots:
+        scores[bot] = BattleResult.objects.filter(bot = bot).aggregate(Sum('score'))['score__sum']
+    ranks = {}
+    for bot in bots:
+        rank = 1
+        b_score = scores[bot]
+        for score in scores.values():
+            if score > b_score:
+                rank = rank + 1
+        ranks[bot] = rank
+    bots_with_ranks = []
+    for i in range(0, bots.__len__()):
+        bot = bots[i]
+        bots_with_ranks.append((ranks[bot], scores[bot], bot))
+    bots_with_ranks.sort()
+    return render_to_response('ChallengeManagement/challenge_ranks.xhtml',
+                              { "title" : "Rankings of " + challenge.title,
+                               "bots_with_ranks" : bots_with_ranks },
+                              context_instance = RequestContext(request));
