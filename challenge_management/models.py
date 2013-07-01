@@ -68,7 +68,9 @@ class Challenge(models.Model):
     bots_per_game = models.IntegerField()
     game_duration = models.IntegerField( verbose_name="Game's duration [s]" )
     judging_program = models.OneToOneField( 'Program' )
-
+    locked = models.BooleanField( default = False )
+    to_delete = models.BooleanField( default = False )
+    
     def __unicode__(self):
         return self.title
 
@@ -86,6 +88,8 @@ class Bot(models.Model):
     creation_date = models.DateTimeField( auto_now_add = True )
     owner = models.ForeignKey( User )
     target_challenge = models.ForeignKey( Challenge )
+    locked = models.BooleanField( default = False )
+    to_delete = models.BooleanField( default = False )
 
     def __unicode__(self):
         return self.name

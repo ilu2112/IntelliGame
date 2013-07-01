@@ -18,7 +18,7 @@ class ChallengeForm(ModelForm):
 
     class Meta:
         model = Challenge
-        exclude = ['judging_program', 'owner', 'directory', 'creation_date']
+        exclude = ['judging_program', 'owner', 'directory', 'creation_date', 'locked', 'to_delete']
 
     def is_valid(self):
         succ = forms.ModelForm.is_valid(self)
@@ -38,7 +38,7 @@ class BotForm(ModelForm):
 
     class Meta:
         model = Bot
-        exclude = ['playing_program', 'owner', 'creation_date', 'directory']
+        exclude = ['playing_program', 'owner', 'creation_date', 'directory', 'locked', 'to_delete']
 
     def is_valid(self):
         succ = forms.ModelForm.is_valid(self)
