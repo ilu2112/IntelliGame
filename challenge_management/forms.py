@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 
 from IntelliGame.settings import CHALLENGES_ROOT
+from IntelliGame.utils import upload_file
 from challenge_management.models import Bot
 from challenge_management.models import Compiler
 from challenge_management.models import Challenge
@@ -49,3 +50,18 @@ class BotForm(ModelForm):
                 succ = False
                 append_error(self, 'name', 'Bot with this Name already exists.') 
         return succ
+
+
+
+
+class EditChallengeForm(forms.Form):
+    short_description = forms.CharField( widget = forms.Textarea, required = False)
+    description_file = forms.FileField( required = False )
+    
+    def save(self, request, challenge):
+        challenge.short_description = self.data["short_description"]
+        if request.FILES.has_key("description_file"):
+            os.remove(challenge.description_file.name)
+            upload_file(challenge.directory, request.FILES["description_file"])
+            challenge.description_file = challenge.directory + request.FILES['description_file'].name
+        challenge.save()

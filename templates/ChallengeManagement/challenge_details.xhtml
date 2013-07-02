@@ -16,7 +16,13 @@
 		&nbsp;&nbsp;&nbsp;
 		<button onclick="document.location='download/'">Download full description</button>
 		&nbsp;&nbsp;&nbsp;
-		<button onclick="document.location='rank'">Show rankings</button>
+		<button onclick="document.location='rank/'">Show rankings</button>
+		{% if user == challenge.owner %}
+			&nbsp;&nbsp;&nbsp;
+			<button onclick="document.location='edit/'">Edit</button>
+			&nbsp;&nbsp;&nbsp;
+			<button onclick="document.location='edit/'">Delete</button>
+		{% endif %}
 	</div>
 	
 {% endblock %}

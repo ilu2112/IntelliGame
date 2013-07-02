@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from django.db.models import Sum
 
 from challenge_management.forms import BotForm
+from challenge_management.forms import EditChallengeForm
 from challenge_management.forms import ChallengeForm
 from challenge_management.models import Bot
 from challenge_management.models import Challenge
@@ -20,18 +21,11 @@ from task_management.tasks import compile_challenge
 from task_management.tasks import compile_bot
 from task_management.tasks import enqueue_bots_battles
 from IntelliGame.settings import CHALLENGES_ROOT
+from IntelliGame.utils import upload_file
 
 from celery import chain
 
 import os
-
-
-
-
-def upload_file(directory, file_to_upload):
-    with open(directory + file_to_upload.name, 'wb+') as destination:
-        for chunk in file_to_upload.chunks():
-            destination.write(chunk)
 
 
 
@@ -266,3 +260,23 @@ def my_challenges_v(request):
                               { "challenges" : challenges, "bots_count" : bots_count,
                                 "title" : "Browse challenges" },
                               context_instance = RequestContext(request));
+
+
+
+
+@login_required
+def edit_challenge_v(request, challenge_id):
+    challenge = Challenge.objects.get(id = challenge_id)
+    if challenge.owner == request.user:
+        form = EditChallengeForm(initial = { 'short_description' : challenge.short_description })
+        if request.method == 'POST':
+            form = EditChallengeForm(request.POST)
+            if form.is_valid():
+                form.save(request, challenge)
+                return HttpResponseRedirect('/successful/')
+        return render_to_response('ChallengeManagement/edit_challenge.xhtml',
+                              { "form" : form, "title" : "Edit " + challenge.title },
+                              context_instance = RequestContext(request));
+    else:
+        return challenge_details_v(request, challenge_id)
+                    
