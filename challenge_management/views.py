@@ -251,3 +251,18 @@ def challenge_rank_v(request, challenge_id):
                               { "title" : "Rankings of " + challenge.title,
                                "bots_with_ranks" : bots_with_ranks },
                               context_instance = RequestContext(request));
+
+
+
+
+@login_required()
+@permission_required('challenge_management.add_challenge', raise_exception=True)
+def my_challenges_v(request):
+    challenges = Challenge.objects.filter(owner = request.user).all()
+    bots_count = dict()
+    for challenge in challenges:
+        bots_count[challenge.id] = Bot.objects.filter(target_challenge = challenge).count()
+    return render_to_response('ChallengeManagement/browse_challenges.xhtml',
+                              { "challenges" : challenges, "bots_count" : bots_count,
+                                "title" : "Browse challenges" },
+                              context_instance = RequestContext(request));

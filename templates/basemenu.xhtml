@@ -15,6 +15,7 @@
 	{% if user.is_authenticated %}
 		{% if perms.challenge_management.add_challenge %}
 			<div class="button" onclick="location.href='/challenge/add_challenge/'">Add challenge</div>
+			<div class="button" onclick="location.href='/challenge/my_challenges/'">My challenges</div>
 		{% endif %}
 		<div class="button" onclick="location.href='/challenge/add_bot/'">Add bot</div>
 		<div class="button" onclick="location.href='/challenge/my_bots/'">My bots</div>

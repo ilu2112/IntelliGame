@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     url(r'^bot/(\d+)[/]$', challenge_management.views.bot_v),
     url(r'^bot/(\d+)/download[/]$', challenge_management.views.download_bots_source_v),
     url(r'^battle/(\d+)[/]$', challenge_management.views.battle_v),
+    url(r'^my_challenges[/]$', challenge_management.views.my_challenges_v),
 )

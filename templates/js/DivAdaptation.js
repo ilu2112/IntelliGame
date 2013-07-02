@@ -34,8 +34,12 @@ function resizeDivs() {
 // In case of problems:
 // http://james.padolsey.com/javascript/get-document-height-cross-browser/
 function getDocHeight() {
-	return window.innerHeight;
+    var D = document;
+    return Math.max(
+        D.body.scrollHeight, D.documentElement.scrollHeight,
+        D.body.offsetHeight, D.documentElement.offsetHeight,
+        D.body.clientHeight, D.documentElement.clientHeight
+    );
 }
-
 
 $(window).resize(resizeDivs);
