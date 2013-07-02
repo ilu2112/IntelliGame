@@ -13,7 +13,9 @@
 		<div class="menuTitle">Challenge</div>
 		<div class="button" onclick="location.href='/challenge/browse_challenges/'">Browse challenges</div>
 	{% if user.is_authenticated %}
-		<div class="button" onclick="location.href='/challenge/add_challenge/'">Add challenge</div>
+		{% if perms.challenge_management.add_challenge %}
+			<div class="button" onclick="location.href='/challenge/add_challenge/'">Add challenge</div>
+		{% endif %}
 		<div class="button" onclick="location.href='/challenge/add_bot/'">Add bot</div>
 		<div class="button" onclick="location.href='/challenge/my_bots/'">My bots</div>
 	{% endif %}

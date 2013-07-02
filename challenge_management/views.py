@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 from django.db.models import Sum
 
 from challenge_management.forms import BotForm
@@ -36,6 +37,7 @@ def upload_file(directory, file_to_upload):
 
 
 @login_required
+@permission_required('challenge_management.add_challenge', raise_exception=True)
 def add_challenge_v(request):
     form = ChallengeForm()
     if request.method == 'POST':
