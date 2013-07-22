@@ -84,7 +84,8 @@ def enqueue_bots_battles(bot):
         # get target challenge
         challenge = bot.target_challenge
         # gather all possible opponents
-        possible_opponents = set(combinations(Bot.objects.all().exclude(pk = bot.pk), challenge.bots_per_game - 1))
+        possible_opponents = set( combinations(Bot.objects.filter(target_challenge = challenge).exclude(pk = bot.pk),
+                                  challenge.bots_per_game - 1))
         # delay every possible battle
         for opponents in possible_opponents:
             bots = list(opponents)
@@ -110,6 +111,6 @@ def run_battle(bots, challenge):
     for i in range(0, bots.__len__()):
         battle_result = BattleResult(battle = battle,
                                      bot = bots[i],
-                                     comment = "",
-                                     score = scores[i])
+                                     comment = scores[i][1],
+                                     score = scores[i][0])
         battle_result.save()

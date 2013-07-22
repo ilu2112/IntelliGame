@@ -40,12 +40,14 @@
 	<div class="header">
 		<div>Bot</div>
 		<div>Score</div>
+		<div>Comment</div>
 	</div>
 	
 	{% for battle_result in battle_results %}
 		<div class="clickable" onclick="document.location='/challenge/bot/{{ battle_result.bot.id }}'">
 			<div>{{ battle_result.bot.name }}</div>
 			<div>{{ battle_result.score }}</div>
+			<div>{{ battle_result.comment }}</div>
 		</div>
 	{% endfor %}
 	
