@@ -1,17 +1,34 @@
+'''
+TODO
+dispatch_judge_message:
+   * komunikat konca gry
+   * komunikat przerwanego potoku
+ogolnie:
+   * licznik czasu
+'''
+
 import select
 
 from subprocess import Popen
 from subprocess import PIPE
+import resource
+
+
+
+
+def set_limits(maximum_memory):
+    resource.setrlimit(resource.RLIMIT_AS, (maximum_memory, maximum_memory))
 
 
 
 
 class SandBox():
 
-    def __init__(self, judge_exec_command, bots_exec_commands, maximum_time):
+    def __init__(self, judge_exec_command, bots_exec_commands, maximum_time, maximum_memory):
         self.judge_exec_command = judge_exec_command
         self.bots_exec_commands = bots_exec_commands
         self.maximum_time = maximum_time
+        self.maximum_memory = maximum_memory
 
 
     def run(self):
@@ -37,7 +54,8 @@ class SandBox():
         # create bot's processes
         self.bot_processes = []
         for bot_exec_command in self.bots_exec_commands:
-            self.bot_processes.append(Popen(bot_exec_command, stdin = PIPE, stdout = PIPE))
+            self.bot_processes.append(Popen(bot_exec_command, stdin = PIPE, stdout = PIPE,
+                                            preexec_fn = (lambda: set_limits(self.maximum_memory)) ))
 
 
     def send_initial_data(self):

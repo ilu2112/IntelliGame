@@ -103,7 +103,7 @@ def run_battle(bots, challenge):
     for bot in bots:
         bots_exec_commands.append(bot.playing_program.get_run_command())
     # run sandbox
-    sb = SandBox(judge_exec_command, bots_exec_commands, challenge.game_duration)
+    sb = SandBox(judge_exec_command, bots_exec_commands, challenge.game_duration, challenge.memory_usage)
     scores = sb.run()
     # save results
     battle = Battle(challenge = challenge)
