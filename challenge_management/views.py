@@ -54,6 +54,7 @@ def add_challenge_v(request):
                                     owner = request.user,
                                     bots_per_game = form.data["bots_per_game"],
                                     game_duration = form.data["game_duration"],
+                                    memory_usage = form.data["memory_usage"],
                                     judging_program = program)
             # queue compilation
             recent_action = RecentAction(owner = request.user,
