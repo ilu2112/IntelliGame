@@ -3,6 +3,7 @@ import subprocess
 from celery import task
 from subprocess import CalledProcessError
 from itertools import combinations
+from shutil import rmtree
 
 from task_management.models import ActionState
 from challenge_management.models import Bot
@@ -114,3 +115,28 @@ def run_battle(bots, challenge):
                                      comment = scores[i][1],
                                      score = scores[i][0])
         battle_result.save()
+
+
+
+
+@task()
+def delete_bot(bot, recent_action):
+    # save new state
+    recent_action.state = ActionState.objects.get(name = 'IN_PROGRESS')
+    recent_action.save()
+    # try to delete bot
+    bot = Bot.objects.get( id = bot.id )
+    if bot.locked == False:
+        # delete all battles
+        own_battle_results = BattleResult.objects.filter( bot = bot ).all()
+        for own_b_r in own_battle_results:
+            battle = own_b_r.battle
+            BattleResult.objects.filter( battle = battle ).all().delete()
+            battle.delete()
+        # delete bot
+        bot.delete()
+        # update state
+        recent_action.state = ActionState.objects.get(name = 'SUCCESS')
+    else:
+        # delay
+        delete_bot.delay(bot, recent_action)
