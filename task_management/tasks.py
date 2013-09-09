@@ -3,7 +3,6 @@ import subprocess
 from celery import task
 from subprocess import CalledProcessError
 from itertools import combinations
-from shutil import rmtree
 
 from task_management.models import ActionState
 from challenge_management.models import Bot
@@ -137,6 +136,7 @@ def delete_bot(bot, recent_action):
         bot.delete()
         # update state
         recent_action.state = ActionState.objects.get(name = 'SUCCESS')
+        recent_action.save()
     else:
         # delay
         delete_bot.delay(bot, recent_action)
