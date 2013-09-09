@@ -76,6 +76,10 @@ class Challenge(models.Model):
         return self.title
 
     def delete(self):
+        # delete bots
+        bots = Bot.objects.filter( target_challenge = self )
+        for bot in bots:
+            bot.delete()
         shutil.rmtree(self.directory)
         self.judging_program.delete()
 
@@ -96,6 +100,13 @@ class Bot(models.Model):
         return self.name
     
     def delete(self):
+        # delete all battles
+        own_battle_results = BattleResult.objects.filter( bot = self ).all()
+        for own_b_r in own_battle_results:
+            battle = own_b_r.battle
+            BattleResult.objects.filter( battle = battle ).all().delete()
+            battle.delete()
+        # delete directory
         shutil.rmtree(self.directory)
         self.playing_program.delete()
 

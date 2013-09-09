@@ -21,6 +21,7 @@ from task_management.tasks import compile_challenge
 from task_management.tasks import compile_bot
 from task_management.tasks import enqueue_bots_battles
 from task_management.tasks import delete_bot
+from task_management.tasks import delete_challenge
 from IntelliGame.settings import CHALLENGES_ROOT
 from IntelliGame.utils import upload_file
 
@@ -301,4 +302,20 @@ def delete_bot_v(request, bot_id):
     else:
         return bot_v(request, bot_id)
 
-                    
+
+
+
+@login_required
+def delete_challenge_v(request, challenge_id):
+    challenge = Challenge.objects.get( id = challenge_id )
+    if request.user == challenge.owner:
+        challenge.to_delete = True
+        challenge.save()
+        recent_action = RecentAction(owner = request.user,
+                                     message = "Removing challenge: " + challenge.title,
+                                     state = ActionState.objects.get(name = 'IN_QUEUE'))
+        recent_action.save()
+        delete_challenge.delay(challenge, recent_action)
+        return HttpResponseRedirect('/successful/')
+    else:
+        return challenge_details_v(request, challenge_id)

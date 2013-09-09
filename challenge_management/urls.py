@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^(\d+)/rank[/]$', challenge_management.views.challenge_rank_v),
     url(r'^(\d+)/add_bot[/]$', challenge_management.views.redirect_add_bot_v),
     url(r'^(\d+)/edit[/]$', challenge_management.views.edit_challenge_v),
+    url(r'^(\d+)/delete[/]$', challenge_management.views.delete_challenge_v),
     url(r'^my_bots[/]$', challenge_management.views.my_bots_v),
     
     url(r'^bot/(\d+)[/]$', challenge_management.views.bot_v),

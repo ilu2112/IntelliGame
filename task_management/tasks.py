@@ -126,12 +126,6 @@ def delete_bot(bot, recent_action):
     # try to delete bot
     bot = Bot.objects.get( id = bot.id )
     if bot.locked == False:
-        # delete all battles
-        own_battle_results = BattleResult.objects.filter( bot = bot ).all()
-        for own_b_r in own_battle_results:
-            battle = own_b_r.battle
-            BattleResult.objects.filter( battle = battle ).all().delete()
-            battle.delete()
         # delete bot
         bot.delete()
         # update state
@@ -140,3 +134,23 @@ def delete_bot(bot, recent_action):
     else:
         # delay
         delete_bot.delay(bot, recent_action)
+
+
+
+
+@task()
+def delete_challenge(challenge, recent_action):
+    # save new state
+    recent_action.state = ActionState.objects.get(name = 'IN_PROGRESS')
+    recent_action.save()
+    # check if all bots are available to delete
+    bots = Bot.objects.filter( target_challenge = challenge )
+    for bot in bots:
+        if bot.locked == True:
+            delete_challenge.delay(challenge, recent_action)
+            return
+    # everything is free, I can delete this challenge
+    challenge.delete()
+    # update state
+    recent_action.state = ActionState.objects.get(name = 'SUCCESS')
+    recent_action.save()
