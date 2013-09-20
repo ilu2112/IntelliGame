@@ -6,11 +6,12 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.contrib.auth.models import User
 
 from user_management.forms import UserForm
 from user_management.forms import ChangePasswdForm
 from user_management.forms import EditProfileForm
-
+from challenge_management.models import Challenge
 
 
 
@@ -64,8 +65,14 @@ def logout_v(request):
 
 @login_required
 def show_profile_v(request):
+    user_id = request.GET.get('id')
+    viewed_user = request.user
+    if user_id is not None and User.objects.filter( id = user_id ).exists():
+        viewed_user = User.objects.get( id = user_id )
+    challenges = Challenge.objects.filter(owner = viewed_user).all()
     return render_to_response('UserManagement/show_profile.xhtml',
-                              { "title" : "Profile details" },
+                              { "title" : "Profile details", "viewed_user" : viewed_user,
+                                "challenges" : challenges },
                               context_instance = RequestContext(request));
 
 

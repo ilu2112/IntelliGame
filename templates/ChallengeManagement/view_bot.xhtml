@@ -44,6 +44,14 @@
 	</li>
 	<li>
 		<div class="name">
+			owner
+		</div>
+		<div class="value clickable" onclick="document.location='/user/show_profile/?id={{ bot.owner.id }}'">
+			{{ bot.owner }}
+		</div>
+	</li>
+	<li>
+		<div class="name">
 			challenge
 		</div>
 		<div class="value clickable" onclick="document.location='/challenge/{{ bot.target_challenge.id }}'">

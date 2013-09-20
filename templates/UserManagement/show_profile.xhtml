@@ -2,6 +2,7 @@
 
 {% block additional_headers %}
 <link href="{{ STATIC_URL }}UserManagement/style/profile.css" rel="stylesheet" type="text/css" />
+<link href="{{ STATIC_URL }}/style/tables.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
@@ -12,7 +13,7 @@
 			username
 		</div>
 		<div class="value">
-			{{ user.username }}
+			{{ viewed_user.username }}
 		</div>
 	</li>
 	<li>
@@ -20,8 +21,8 @@
 			first name
 		</div>
 		<div class="value">
-			{% if user.first_name %}
-				{{ user.first_name }}
+			{% if viewed_user.first_name %}
+				{{ viewed_user.first_name }}
 			{% else %}
 				&nbsp;
 			{% endif %}
@@ -32,8 +33,8 @@
 			last name
 		</div>
 		<div class="value">
-			{% if user.last_name %}
-				{{ user.last_name }}
+			{% if viewed_user.last_name %}
+				{{ viewed_user.last_name }}
 			{% else %}
 				&nbsp;
 			{% endif %}
@@ -44,8 +45,8 @@
 			email
 		</div>
 		<div class="value">
-			{% if user.email %}
-				{{ user.email }}
+			{% if viewed_user.email %}
+				{{ viewed_user.email }}
 			{% else %}
 				&nbsp;
 			{% endif %}
@@ -56,9 +57,32 @@
 			active since
 		</div>
 		<div class="value">
-			{{ user.date_joined|date }}
+			{{ viewed_user.date_joined|date }}
 		</div>
 	</li>
+</ul>
+
+
+<br />
+<br />
+
+<div class="subTitle">
+	Own challenges
+</div>
+
+<br />
+<br />
+<br />
+<br />
+
+<ul>
+	{% for challenge in challenges %}
+	<li>
+		<div class="value clickable" onclick="document.location='/challenge/{{ challenge.id }}/'">
+			{{ challenge.title }}
+		</div>
+	</li>
+	{% endfor %}
 </ul>
 
 {% endblock %}
