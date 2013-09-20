@@ -24,4 +24,21 @@
 	{% endfor %}
 </div>
 
+<br />
+<br />
+{% if recent_actions.has_previous %}
+	<button onclick="document.location='?page={{ recent_actions.previous_page_number }}'">previous</button>
+	&nbsp;&nbsp;&nbsp;
+{% endif %}
+
+<span class="label">
+	Page {{ recent_actions.number }} of {{ recent_actions.paginator.num_pages }}
+</span>
+
+{% if recent_actions.has_next %}
+	&nbsp;&nbsp;&nbsp;
+	<button onclick="document.location='?page={{ recent_actions.next_page_number }}'">next</button>
+{% endif %}
+
+
 {% endblock %}
