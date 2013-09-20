@@ -123,3 +123,7 @@ button {
 textarea {
 	resize: none;
 }
+
+span.pageCounter {
+	font-family: 'Ubuntu Mono', sans-serif;
+}
