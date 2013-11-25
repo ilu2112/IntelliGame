@@ -1,7 +1,6 @@
 '''
 TODO
 dispatch_judge_message:
-   * komunikat konca gry
    * komunikat przerwanego potoku
 ogolnie:
    * licznik czasu
@@ -29,6 +28,7 @@ class SandBox():
         self.bots_exec_commands = bots_exec_commands
         self.maximum_time = maximum_time
         self.maximum_memory = maximum_memory
+        self.results = []
 
 
     def run(self):
@@ -36,26 +36,32 @@ class SandBox():
         self.create_threads()
         self.send_initial_data()
         print "Running main loop"
-        counter = 1
+        counter = 0
         while True:
             if self.is_ready_for_read(self.judge_process):
                 self.dispatch_judge_message(self.judge_process.stdout.readline())
-            if self.is_ready_for_read(self.bot_processes[counter - 1]):
-                self.dispatch_bot_message(counter, self.bot_processes[counter - 1].stdout.readline())
+                if len(self.results) > 0:
+                    # kill all and return results
+                    for p in self.bot_processes:
+                        p.kill()
+                    self.judge_process.kill()
+                    return self.results
+            if self.is_ready_for_read(self.bot_processes[counter]):
+                self.dispatch_bot_message(counter, self.bot_processes[counter].stdout.readline())
             counter = counter + 1
-            if counter > self.bot_processes.__len__():
-                counter = 1
+            if counter >= self.bot_processes.__len__():
+                counter = 0
 
 
     def create_threads(self):
         print "Creating programs..."
         # create judge's process
-        self.judge_process = Popen(self.judge_exec_command, stdin = PIPE, stdout = PIPE)
+        self.judge_process = Popen(self.judge_exec_command, stdin = PIPE, stdout = PIPE, stderr = None)
         # create bot's processes
         self.bot_processes = []
         for bot_exec_command in self.bots_exec_commands:
-            self.bot_processes.append(Popen(bot_exec_command, stdin = PIPE, stdout = PIPE,
-                                            preexec_fn = (lambda: set_limits(self.maximum_memory)) ))
+            self.bot_processes.append(Popen(bot_exec_command, stdin = PIPE, stdout = PIPE, stderr = None,
+                                            preexec_fn = (lambda: set_limits(256 * 1024 * 1024)) ))
 
 
     def send_initial_data(self):
@@ -71,23 +77,43 @@ class SandBox():
 
     def dispatch_judge_message(self, message):
         if message.__len__() > 0:
-            # TODO obsluzyc komunikat konca gry
-            bot_number = int(message.split(":")[0].split(" ")[1])
-            # TODO obsluzyc wyjatek przerwanego potoku
-            self.bot_processes[bot_number - 1].stdin.write(message[message.find(":") + 1:])
-            self.bot_processes[bot_number - 1].stdin.flush()
+            if message.find("results begin") > -1:
+                # end game
+                while not self.is_ready_for_read(self.judge_process):
+                    line = ""
+                line = self.judge_process.stdout.readline()
+                while line.find("results end") == -1:
+                    self.results.append((int(line.split(" ")[0]), line.split(" ")[1].strip()))
+                    while not self.is_ready_for_read(self.judge_process):
+                        line = ""
+                    line = self.judge_process.stdout.readline()
+                try:
+                    self.judge_process.stdin.write("exit\n")
+                    self.judge_process.stdin.flush()
+                except IOError:
+                    pass
+            else:
+                # message for a bot
+                bot_number = int(message.split(":")[0].split(" ")[1])
+                try:
+                    self.bot_processes[bot_number - 1].stdin.write(message[message.find(":") + 1:])
+                    self.bot_processes[bot_number - 1].stdin.flush()
+                except IOError:
+                    pass
 
 
     def dispatch_bot_message(self, bots_number, message):
         if message.__len__() > 0:
-            print "   >>> Bot {} message: ".format(bots_number) + str(message)
+            try:
+                self.judge_process.stdin.write("bot " + str(bots_number) + ": " + message)
+                self.judge_process.stdin.flush()
+            except IOError:
+                pass
 
 
 
-
-sb = SandBox("/home/marcin/Desktop/inzynierka/judge",
-            ["/home/marcin/Desktop/inzynierka/one_input", "/home/marcin/Desktop/inzynierka/one_input"],
-            120)
-sb.run()
-
-
+sb = SandBox("java -cp /home/marcin/Pulpit/inz/ AverageTheGame".split(" "),
+            ["python /home/marcin/Pulpit/inz/AlwaysFive.py".split(" "), "python /home/marcin/Pulpit/inz/AlwaysThirty.py".split(" ")],
+            120,
+            256)
+print(str(sb.run()))

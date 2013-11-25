@@ -50,7 +50,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/marcin/aworkspace/IntelliGame/media/'
+MEDIA_ROOT = '/home/marcin/Develop/aptana_workspace/IntelliGame/media/'
 
 # location of challenges
 CHALLENGES_ROOT = MEDIA_ROOT + "challenges/"
@@ -72,7 +72,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    "/home/marcin/aworkspace/IntelliGame/templates/",
+    "/home/marcin/Develop/aptana_workspace/IntelliGame/templates/",
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -112,7 +112,7 @@ ROOT_URLCONF = 'IntelliGame.urls'
 WSGI_APPLICATION = 'IntelliGame.wsgi.application'
 
 TEMPLATE_DIRS = (
-    "/home/marcin/aworkspace/IntelliGame/templates/"
+    "/home/marcin/Develop/aptana_workspace/IntelliGame/templates/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
