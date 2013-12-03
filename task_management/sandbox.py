@@ -1,11 +1,3 @@
-'''
-TODO
-dispatch_judge_message:
-   * komunikat przerwanego potoku
-ogolnie:
-   * licznik czasu
-'''
-
 import select
 
 from subprocess import Popen
@@ -29,6 +21,8 @@ class SandBox():
         self.maximum_time = maximum_time
         self.maximum_memory = maximum_memory
         self.results = []
+        print("JUDGE: " + str(judge_exec_command))
+        print("BOTS: " + str(bots_exec_commands))
 
 
     def run(self):
@@ -56,12 +50,12 @@ class SandBox():
     def create_threads(self):
         print "Creating programs..."
         # create judge's process
-        self.judge_process = Popen(self.judge_exec_command, stdin = PIPE, stdout = PIPE, stderr = None)
+        self.judge_process = Popen(self.judge_exec_command, stdin = PIPE, stdout = PIPE, stderr = None, shell=True)
         # create bot's processes
         self.bot_processes = []
         for bot_exec_command in self.bots_exec_commands:
-            self.bot_processes.append(Popen(bot_exec_command, stdin = PIPE, stdout = PIPE, stderr = None,
-                                            preexec_fn = (lambda: set_limits(256 * 1024 * 1024)) ))
+            self.bot_processes.append(Popen(bot_exec_command, stdin = PIPE, stdout = PIPE, stderr = None, shell=True,
+                                            preexec_fn = (lambda: set_limits(self.maximum_memory * 1024 * 1024)) ))
 
 
     def send_initial_data(self):
@@ -109,11 +103,3 @@ class SandBox():
                 self.judge_process.stdin.flush()
             except IOError:
                 pass
-
-
-
-sb = SandBox("java -cp /home/marcin/Pulpit/inz/ AverageTheGame".split(" "),
-            ["python /home/marcin/Pulpit/inz/AlwaysFive.py".split(" "), "python /home/marcin/Pulpit/inz/AlwaysThirty.py".split(" ")],
-            120,
-            256)
-print(str(sb.run()))

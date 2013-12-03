@@ -8,7 +8,7 @@ from task_management.models import ActionState
 from challenge_management.models import Bot
 from challenge_management.models import Battle
 from challenge_management.models import BattleResult
-from sandbox_mock import SandBox
+from sandbox import SandBox
 
 
 
@@ -98,10 +98,10 @@ def enqueue_bots_battles(bot):
 @task()
 def run_battle(bots, challenge):
     # generate run commands
-    judge_exec_command = challenge.judging_program.get_run_command()
+    judge_exec_command = challenge.judging_program.get_run_command().split(" ")
     bots_exec_commands = []
     for bot in bots:
-        bots_exec_commands.append(bot.playing_program.get_run_command())
+        bots_exec_commands.append(bot.playing_program.get_run_command().split(" "))
     # run sandbox
     sb = SandBox(judge_exec_command, bots_exec_commands, challenge.game_duration, challenge.memory_usage)
     scores = sb.run()
