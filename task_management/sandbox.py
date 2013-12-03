@@ -21,8 +21,6 @@ class SandBox():
         self.maximum_time = maximum_time
         self.maximum_memory = maximum_memory
         self.results = []
-        print("JUDGE: " + str(judge_exec_command))
-        print("BOTS: " + str(bots_exec_commands))
 
 
     def run(self):
@@ -50,12 +48,12 @@ class SandBox():
     def create_threads(self):
         print "Creating programs..."
         # create judge's process
-        self.judge_process = Popen(self.judge_exec_command, stdin = PIPE, stdout = PIPE, stderr = None, shell=True)
+        self.judge_process = Popen(self.judge_exec_command, stdin=PIPE, stdout=PIPE, stderr=None)
         # create bot's processes
         self.bot_processes = []
         for bot_exec_command in self.bots_exec_commands:
-            self.bot_processes.append(Popen(bot_exec_command, stdin = PIPE, stdout = PIPE, stderr = None, shell=True,
-                                            preexec_fn = (lambda: set_limits(self.maximum_memory * 1024 * 1024)) ))
+            self.bot_processes.append(Popen(bot_exec_command, stdin=PIPE, stdout=PIPE, stderr=None,
+                                            preexec_fn=(lambda: set_limits(self.maximum_memory * 1024 * 1024))))
 
 
     def send_initial_data(self):
