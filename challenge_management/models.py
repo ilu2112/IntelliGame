@@ -12,14 +12,14 @@ class Compiler(models.Model):
                             blank = False)
     compile_command = models.CharField(max_length = 100, 
                                        blank = False,
-                                       help_text = """Please use {source_file} and {binary_file} tags (second one if needed). <br />
-                                                      Example 1: g++ {source_file} -o {binary_file} <br />
-                                                      Example 2: javac {source_file}""")
+                                       help_text = """Please use {source_file}, {binary_file}, {directory} tags. <br />
+                                                      Example 1: g++ {directory}/{source_file} -o {directory}/{binary_file}<br />
+                                                      Example 2: javac {directory}/{source_file}""")
     run_command = models.CharField(max_length = 100, 
                                    blank = False,
-                                   help_text = """Please use {binary_file} tag.<br />
-                                                  Example 1: ./{binary_file} <br />
-                                                  Example 2: java {binary_file} """)
+                                   help_text = """Please use {binary_file} and {directory} tags. <br />
+                                                  Example 1: {directory}/{binary_file} (for plain binary files}<br />
+                                                  Example 2: java -cp {directory}/ {binary_file}""")
     binary_extension = models.CharField(max_length = 10, 
                                         blank = True,
                                         help_text = """ Example 1: class for java compiler <br />
@@ -43,16 +43,18 @@ class Program(models.Model):
         return self.source_file.name
 
     def get_compile_command(self):
-        source = self.source_file.path
-        binary = os.path.splitext(self.source_file.path)[0]
+        source = os.path.split(self.source_file.path)[1]
+        binary = os.path.splitext(source)[0]
+        dir = os.path.dirname(self.source_file.path)
         if (self.compiler.ignore_binary_extension == False and self.compiler.binary_extension != None):
             binary = binary + '.' + self.compiler.binary_extension
-        command = self.compiler.compile_command.format(source_file = source, binary_file = binary)
+        command = self.compiler.compile_command.format(source_file = source, binary_file = binary, directory = dir)
         return command
 
     def get_run_command(self):
-        binary = self.binary_file.path
-        command = self.compiler.run_command.format(binary_file = binary)
+        dir = os.path.dirname(self.binary_file.path)
+        binary = self.binary_file.path.split("/")[-1]
+        command = self.compiler.run_command.format(binary_file = binary, directory = dir)
         return command
 
 
