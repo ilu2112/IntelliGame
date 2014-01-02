@@ -7,6 +7,7 @@ djcelery.setup_loader()
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+SANDBOX_USER_ID = 65534
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
