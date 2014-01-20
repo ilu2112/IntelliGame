@@ -2,6 +2,8 @@ import select
 
 from subprocess import Popen
 from subprocess import PIPE
+from os import setuid
+from IntelliGame.settings import SANDBOX_USER_ID
 import resource
 
 
@@ -9,6 +11,7 @@ import resource
 
 def set_limits(maximum_memory):
     resource.setrlimit(resource.RLIMIT_AS, (maximum_memory, maximum_memory))
+    setuid(SANDBOX_USER_ID)
 
 
 
