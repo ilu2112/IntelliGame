@@ -1,4 +1,4 @@
 IntelliGame
 ===========
 
-AI Games Server
+AI Games Server written for academic purposes (Engineering Thesis).
